@@ -2,4 +2,5 @@
   <h2>🚘 Vehicle Diagnostics & Configuration Dashboard</h2>
 </div>
 
-#### 🎯 Objective :
+#### 🎯 Objective
+Build a mini fullstack system that:
