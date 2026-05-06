@@ -4,3 +4,4 @@
 
 #### 🎯 Objective
 Build a mini fullstack system that:
+- Accepts log file input from a diagnostic tool
