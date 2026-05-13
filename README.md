@@ -8,3 +8,4 @@ Build a mini fullstack system that:
 - Parses and stores relavant entries on the backend
 - Displays vehicle diagnostic data on the frontend
 - Allows basic searching and filtering
+- Demonstrates clean architecture and team-level thinking
