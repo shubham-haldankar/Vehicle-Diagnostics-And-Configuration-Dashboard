@@ -9,3 +9,5 @@ Your are part of an automotive platform team building a diagnostics dashboard fo
 - Displays vehicle diagnostic data on the frontend
 - Allows basic searching and filtering
 - Demonstrates clean architecture and team-level thinking
+
+#### 🎯 Objective
