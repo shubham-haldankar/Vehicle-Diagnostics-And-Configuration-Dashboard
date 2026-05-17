@@ -11,3 +11,4 @@ Your are part of an automotive platform team building a diagnostics dashboard fo
 - Demonstrates clean architecture and team-level thinking
 
 #### 🎯 Objective
+Build a mini fullstack system that:
