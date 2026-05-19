@@ -12,3 +12,4 @@ Your are part of an automotive platform team building a diagnostics dashboard fo
 
 #### 🎯 Objective
 Build a mini fullstack system that:
+1. Processes diagnostic logs in a structured format
