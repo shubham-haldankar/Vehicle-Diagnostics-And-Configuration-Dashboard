@@ -14,3 +14,4 @@ Your are part of an automotive platform team building a diagnostics dashboard fo
 Build a mini fullstack system that:
 1. Processes diagnostic logs in a structured format
 2. Exposes a REST API for querying the data
+3. Provides a frontend dashboard to display and filter results
