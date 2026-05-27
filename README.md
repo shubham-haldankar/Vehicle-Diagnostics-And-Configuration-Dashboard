@@ -17,3 +17,4 @@ Build a mini fullstack system that:
 3. Provides a frontend dashboard to display and filter results
 
 #### 🔧 Requirements
+##### 📋 Frontend (Angular)
