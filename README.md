@@ -19,3 +19,4 @@ Build a mini fullstack system that:
 #### 🔧 Requirements
 ##### 📋 Frontend (Angular)
 - Angular 15+ application
+- A search panel (form) with fields like:
