@@ -21,3 +21,4 @@ Build a mini fullstack system that:
 - Angular 15+ application
 - A search panel (form) with fields like:
   - Vehicle ID
+  - Error code
