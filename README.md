@@ -22,3 +22,4 @@ Build a mini fullstack system that:
 - A search panel (form) with fields like:
   - Vehicle ID
   - Error code
+  - Timestamp range
