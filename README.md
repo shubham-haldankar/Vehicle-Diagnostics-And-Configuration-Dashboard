@@ -23,3 +23,4 @@ Build a mini fullstack system that:
   - Vehicle ID
   - Error code
   - Timestamp range
+- A **table view** to show matching log entries
