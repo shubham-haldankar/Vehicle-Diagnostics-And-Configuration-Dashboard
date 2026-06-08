@@ -24,3 +24,4 @@ Build a mini fullstack system that:
   - Error code
   - Timestamp range
 - A **table view** to show matching log entries
+- State management with **NgRx**
