@@ -26,3 +26,4 @@ Build a mini fullstack system that:
 - A **table view** to show matching log entries
 - State management with **NgRx**
 - Reusable Components
+- Clean UX, responsiveness,and accessibility 
