@@ -28,4 +28,4 @@ Build a mini fullstack system that:
 - Reusable Components
 - Clean UX, responsiveness,and accessibility
 
-##### 📋 Backend (Node.js + TypeScript)
+##### 🗄️ Backend (Node.js + TypeScript)
