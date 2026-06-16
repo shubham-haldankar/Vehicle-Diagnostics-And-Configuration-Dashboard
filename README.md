@@ -29,3 +29,4 @@ Build a mini fullstack system that:
 - Clean UX, responsiveness,and accessibility
 
 ##### 🗄️ Backend (Node.js + TypeScript)
+- Use **NestJS**
