@@ -30,3 +30,4 @@ Build a mini fullstack system that:
 
 ##### 🗄️ Backend (Node.js + TypeScript)
 - Use **NestJS**
+- Parse a given diagnostic log file:
