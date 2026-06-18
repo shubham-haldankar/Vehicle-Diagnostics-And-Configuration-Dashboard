@@ -31,3 +31,4 @@ Build a mini fullstack system that:
 ##### 🗄️ Backend (Node.js + TypeScript)
 - Use **NestJS**
 - Parse a given diagnostic log file:
+[2025-07-24 14:21:08] [VEHICLE_ID:1234] [ERROR] [CODE:U0420] [Steering angle sensor malfunction]
