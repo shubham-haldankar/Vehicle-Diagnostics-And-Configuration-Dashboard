@@ -34,3 +34,4 @@ Build a mini fullstack system that:
 `[2025-07-24 14:21:08] [VEHICLE_ID:1234] [ERROR] [CODE:U0420] [Steering angle sensor malfunction]`
 - Store entries in memory or file-based DB(e.g.,lowdb, SQLite)
 - REST APIs:
+  - `GET /logs?vehicle=1234`
