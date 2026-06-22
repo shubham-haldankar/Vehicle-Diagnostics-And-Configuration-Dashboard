@@ -35,3 +35,4 @@ Build a mini fullstack system that:
 - Store entries in memory or file-based DB(e.g.,lowdb, SQLite)
 - REST APIs:
   - `GET /logs?vehicle=1234`
+  - `GET /logs?code=U0420`
