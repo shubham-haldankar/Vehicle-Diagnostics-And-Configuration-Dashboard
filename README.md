@@ -36,3 +36,4 @@ Build a mini fullstack system that:
 - REST APIs:
   - `GET /logs?vehicle=1234`
   - `GET /logs?code=U0420`
+  - `GET /logs?from=...&to=...`
