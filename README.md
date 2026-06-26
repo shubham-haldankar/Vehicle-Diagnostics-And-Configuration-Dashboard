@@ -37,3 +37,4 @@ Build a mini fullstack system that:
   - `GET /logs?vehicle=1234`
   - `GET /logs?code=U0420`
   - `GET /logs?from=...&to=...`
+- Input validation & error handling
