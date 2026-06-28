@@ -38,3 +38,5 @@ Build a mini fullstack system that:
   - `GET /logs?code=U0420`
   - `GET /logs?from=...&to=...`
 - Input validation & error handling
+
+#### 🗒 Deliverables
