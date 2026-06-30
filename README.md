@@ -40,3 +40,4 @@ Build a mini fullstack system that:
 - Input validation & error handling
 
 #### 🗒 Deliverables
+- Source code: GitHub repo
