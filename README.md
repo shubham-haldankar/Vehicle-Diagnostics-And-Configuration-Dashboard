@@ -41,3 +41,4 @@ Build a mini fullstack system that:
 
 #### 🗒 Deliverables
 - Source code: GitHub repo
+- README including:
