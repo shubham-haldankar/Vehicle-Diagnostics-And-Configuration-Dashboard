@@ -43,3 +43,4 @@ Build a mini fullstack system that:
 - Source code: GitHub repo
 - README including:
   - Setup instructions
+  - Architecture overview
