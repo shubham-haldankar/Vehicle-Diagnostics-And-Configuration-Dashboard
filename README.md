@@ -44,3 +44,4 @@ Build a mini fullstack system that:
 - README including:
   - Setup instructions
   - Architecture overview
+  - Design decisions and assumptions
