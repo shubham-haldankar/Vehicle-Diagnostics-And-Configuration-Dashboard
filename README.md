@@ -45,3 +45,4 @@ Build a mini fullstack system that:
   - Setup instructions
   - Architecture overview
   - Design decisions and assumptions
+- API documentation
