@@ -1,48 +1,27 @@
-<div id="header" align="center">
-  <h2>🚘 Vehicle Diagnostics & Configuration Dashboard</h2>
-</div>
+# Frontend
 
-#### 📘 Scenario
-Your are part of an automotive platform team building a diagnostics dashboard for connected vehicles. Your task is to create a minimal fullstack application that:
-- Accepts log file input from a diagnostic tool
-- Parses and stores relavant entries on the backend
-- Displays vehicle diagnostic data on the frontend
-- Allows basic searching and filtering
-- Demonstrates clean architecture and team-level thinking
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.16.
 
-#### 🎯 Objective
-Build a mini fullstack system that:
-1. Processes diagnostic logs in a structured format
-2. Exposes a REST API for querying the data
-3. Provides a frontend dashboard to display and filter results
+## Development server
 
-#### 🔧 Requirements
-##### 📋 Frontend (Angular)
-- Angular 15+ application
-- A search panel (form) with fields like:
-  - Vehicle ID
-  - Error code
-  - Timestamp range
-- A **table view** to show matching log entries
-- State management with **NgRx**
-- Reusable Components
-- Clean UX, responsiveness,and accessibility
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-##### 🗄️ Backend (Node.js + TypeScript)
-- Use **NestJS**
-- Parse a given diagnostic log file:
-`[2025-07-24 14:21:08] [VEHICLE_ID:1234] [ERROR] [CODE:U0420] [Steering angle sensor malfunction]`
-- Store entries in memory or file-based DB(e.g.,lowdb, SQLite)
-- REST APIs:
-  - `GET /logs?vehicle=1234`
-  - `GET /logs?code=U0420`
-  - `GET /logs?from=...&to=...`
-- Input validation & error handling
+## Code scaffolding
 
-#### 🗒 Deliverables
-- Source code: GitHub repo
-- README including:
-  - Setup instructions
-  - Architecture overview
-  - Design decisions and assumptions
-- API documentation
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+
+## Build
+
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+
+## Running unit tests
+
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+
+## Running end-to-end tests
+
+Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+
+## Further help
+
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
