@@ -9,7 +9,10 @@
   display: block;
   margin-bottom: 8px;
   color: #6d7486;
-  font-size: 11px;
+  font-family:
+    "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+  font-size: 16px;
   font-weight: 600;
   letter-spacing: 3px;
   text-transform: uppercase;
