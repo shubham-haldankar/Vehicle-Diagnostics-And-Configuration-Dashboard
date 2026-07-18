@@ -7,16 +7,15 @@ import { selectAllLogs } from './store/selectors';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-
   logs$ = this.store.select(selectAllLogs);
 
   constructor(private store: Store) {}
 
-  onSearch(filter: SearchFilter){
-    console.log(filter)
+  onSearch(filter: SearchFilter) {
+    console.log(filter);
     this.store.dispatch(loadLogs({ filter }));
   }
 }
