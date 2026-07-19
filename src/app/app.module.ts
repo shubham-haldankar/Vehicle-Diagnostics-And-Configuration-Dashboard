@@ -12,7 +12,6 @@ import { LogsEffects } from './store/logs.effects';
 import { logsReducer } from './store/logs.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { SearchPanelComponent } from './components/search-panel/search-panel.component';
-import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [AppComponent, SearchPanelComponent, SearchResultsComponent],
@@ -20,7 +19,6 @@ import { SharedModule } from './shared/shared.module';
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    SharedModule,
     StoreModule.forRoot({ logs: logsReducer }),
     EffectsModule.forRoot([LogsEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 50, logOnly: false }),

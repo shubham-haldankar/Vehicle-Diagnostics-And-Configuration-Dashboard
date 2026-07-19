@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { SearchFilter } from '../../models/SearchFilter';
-import { DropdownOption } from '../../shared/components/dropdown-input/dropdown-input.component';
+import { SearchFilter } from '../../models/search-filter';
 
 type SearchParams = {
   errorCode: string;
@@ -16,13 +15,6 @@ type SearchParams = {
 })
 export class SearchPanelComponent {
   @Output() search = new EventEmitter<SearchFilter>();
-
-  readonly severityOptions: DropdownOption[] = [
-    { label: 'Low', value: 'low' },
-    { label: 'Medium', value: 'medium' },
-    { label: 'High', value: 'high' },
-    { label: 'Critical', value: 'critical' },
-  ];
 
   searchParams: SearchParams = this.defaultParams();
 

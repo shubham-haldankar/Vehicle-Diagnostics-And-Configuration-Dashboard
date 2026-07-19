@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { loadLogs, loadLogsFailure, loadLogsSuccess } from './actions';
+import { loadLogs, loadLogsFailure, loadLogsSuccess } from './logs.actions';
 import { LogEntry } from '../models/log-entry.model';
 
 export interface LogsState {

@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { loadLogs } from './store/actions';
-import { SearchFilter } from './models/SearchFilter';
-import { selectAllLogs } from './store/selectors';
+import { loadLogs } from './store/logs.actions';
+import { SearchFilter } from './models/search-filter';
+import { selectLogs } from './store/logs.selectors';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +10,7 @@ import { selectAllLogs } from './store/selectors';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  logs$ = this.store.select(selectAllLogs);
+  logs$ = this.store.select(selectLogs);
 
   constructor(private store: Store) {}
 

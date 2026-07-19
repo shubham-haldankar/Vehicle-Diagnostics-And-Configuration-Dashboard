@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { SearchFilter } from '../models/SearchFilter';
+import { SearchFilter } from '../models/search-filter';
 import { LogEntry } from '../models/log-entry.model';
 
 export const loadLogs = createAction(
