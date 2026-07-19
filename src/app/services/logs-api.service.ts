@@ -1,15 +1,15 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { SearchFilter } from '../models/SearchFilter';
+import { SearchFilter } from '../models/search-filter';
 import { Observable } from 'rxjs';
 import { LogEntry } from '../models/log-entry.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LogsApiService {
-
-  private readonly baseUrl: string = 'http://localhost:3000/logs'; 
+  private readonly baseUrl: string = `${environment.apiUrl}/logs`;
 
   constructor(private http: HttpClient) {}
 
