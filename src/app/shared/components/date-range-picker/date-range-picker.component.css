@@ -1,0 +1,62 @@
+@import "../../styles/common-input.css";
+
+.date-range-panel {
+  max-width: 320px;
+}
+
+.range-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.range-field {
+  position: relative;
+  min-width: 0;
+}
+
+.from-field {
+  --prefix-chars: 4;
+}
+
+.to-field {
+  --prefix-chars: 2;
+}
+
+.range-leading-text {
+  width: calc(var(--prefix-chars) * 1ch);
+  display: inline-block;
+  color: var(--shared-color-muted);
+  font-family: var(--shared-font-mono);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.p-input-icon-left > .range-leading-text {
+  font-family: var(--shared-font-mono) !important;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1;
+  font-variant-ligatures: none;
+}
+
+:host ::ng-deep .p-calendar {
+  width: 100%;
+  display: flex;
+  align-items: stretch;
+}
+
+:host ::ng-deep .p-calendar .p-inputtext {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+:host ::ng-deep .p-input-icon-left .p-calendar .p-inputtext {
+  padding: 0 var(--shared-field-padding-inline) 0
+    calc(14px + (var(--prefix-chars) * 1ch) + 13px);
+}

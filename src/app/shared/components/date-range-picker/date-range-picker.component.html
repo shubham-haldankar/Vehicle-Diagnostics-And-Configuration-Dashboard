@@ -1,0 +1,39 @@
+<div class="search-panel date-range-panel">
+  <label class="search-label">{{ label }}</label>
+
+  <div class="range-grid">
+    <span class="p-input-icon-left w-100 range-field from-field">
+      <i class="range-leading-text">{{ fromLabel | uppercase }}</i>
+      <p-calendar
+        [(ngModel)]="fromDate"
+        (ngModelChange)="onFromDateChange($event)"
+        [placeholder]="fromPlaceholder"
+        [dateFormat]="dateFormat"
+        [minDate]="$any(minDate)"
+        [maxDate]="$any(maxDate)"
+        [showIcon]="false"
+        [showButtonBar]="showButtonBar"
+        appendTo="body"
+        inputStyleClass="search-input"
+      >
+      </p-calendar>
+    </span>
+
+    <span class="p-input-icon-left w-100 range-field to-field">
+      <i class="range-leading-text">{{ toLabel | uppercase }}</i>
+      <p-calendar
+        [(ngModel)]="toDate"
+        (ngModelChange)="onToDateChange($event)"
+        [placeholder]="toPlaceholder"
+        [dateFormat]="dateFormat"
+        [minDate]="$any(minDate)"
+        [maxDate]="$any(maxDate)"
+        [showIcon]="false"
+        [showButtonBar]="showButtonBar"
+        appendTo="body"
+        inputStyleClass="search-input"
+      >
+      </p-calendar>
+    </span>
+  </div>
+</div>

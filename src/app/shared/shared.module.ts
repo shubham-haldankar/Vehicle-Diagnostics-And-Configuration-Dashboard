@@ -7,16 +7,27 @@ import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { DropdownInputComponent } from './components/dropdown-input/dropdown-input.component';
+import { CalendarModule } from 'primeng/calendar';
+import { DateRangePickerComponent } from './components/date-range-picker/date-range-picker.component';
 
 @NgModule({
-  declarations: [TextInputComponent, DropdownInputComponent],
+  declarations: [
+    TextInputComponent,
+    DropdownInputComponent,
+    DateRangePickerComponent,
+  ],
   imports: [
     BrowserAnimationsModule,
     InputTextModule,
     DropdownModule,
+    CalendarModule,
     FormsModule,
     CommonModule,
   ],
-  exports: [TextInputComponent, DropdownInputComponent],
+  exports: [
+    TextInputComponent,
+    DropdownInputComponent,
+    DateRangePickerComponent,
+  ],
 })
 export class SharedModule {}
