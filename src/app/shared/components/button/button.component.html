@@ -1,0 +1,15 @@
+<button
+  class="btn"
+  [ngClass]="{
+    'btn--outline': variant === 'outline',
+    'btn--filled': variant === 'filled',
+    'btn--full-width': fullWidth,
+    'btn--upper': uppercase,
+  }"
+  [attr.type]="buttonType"
+  [disabled]="disabled"
+  (click)="onClick($event)"
+>
+  <i *ngIf="showIcon" class="pi" [ngClass]="icon"></i>
+  <span>{{ label }}</span>
+</button>

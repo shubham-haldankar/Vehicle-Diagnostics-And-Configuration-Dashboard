@@ -1,4 +1,4 @@
-import { Component, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-text-input',
@@ -9,4 +9,11 @@ export class TextInputComponent {
   @Input() placeholder = '';
   @Input() label = '';
   @Input() fieldName = '';
+
+  @Output() fieldNameChange = new EventEmitter<string>();
+
+  onFieldNameChange(value: string): void {
+    this.fieldName = value;
+    this.fieldNameChange.emit(value);
+  }
 }

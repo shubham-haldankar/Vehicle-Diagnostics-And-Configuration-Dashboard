@@ -3,13 +3,38 @@
     <div class="flex justify-center">
       <div class="col">
         <app-text-input
+          [fieldName]="searchParams.errorCode"
+          (fieldNameChange)="onErrorCodeChange($event)"
           [placeholder]="'B0051'"
           [label]="'code'"
         ></app-text-input>
       </div>
-      <div class="col"><app-dropdown-input></app-dropdown-input></div>
-      <div class="col"><app-date-range-picker></app-date-range-picker></div>
-      <div class="col">col</div>
+      <div class="col">
+        <app-dropdown-input
+          [label]="'Severity'"
+          [placeholder]="'Select severity'"
+          [options]="severityOptions"
+          [value]="searchParams.severity"
+          (valueChange)="onSeverityChange($event)"
+        ></app-dropdown-input>
+      </div>
+      <div class="col">
+        <app-date-range-picker
+          [fromDate]="searchParams.from"
+          [toDate]="searchParams.to"
+          (fromDateChange)="onFromDateChange($event)"
+          (toDateChange)="onToDateChange($event)"
+        ></app-date-range-picker>
+      </div>
+      <div class="col">
+        <app-search-actions
+          [label]="''"
+          [resetLabel]="'Reset'"
+          [searchLabel]="'Search'"
+          (reset)="onReset()"
+          (search)="onSubmit()"
+        ></app-search-actions>
+      </div>
     </div>
   </div>
 </div>

@@ -9,12 +9,16 @@ import { DropdownModule } from 'primeng/dropdown';
 import { DropdownInputComponent } from './components/dropdown-input/dropdown-input.component';
 import { CalendarModule } from 'primeng/calendar';
 import { DateRangePickerComponent } from './components/date-range-picker/date-range-picker.component';
+import { ButtonComponent } from './components/button/button.component';
+import { SearchActionsComponent } from './components/search-actions/search-actions.component';
 
 @NgModule({
   declarations: [
     TextInputComponent,
     DropdownInputComponent,
     DateRangePickerComponent,
+    ButtonComponent,
+    SearchActionsComponent,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -28,6 +32,8 @@ import { DateRangePickerComponent } from './components/date-range-picker/date-ra
     TextInputComponent,
     DropdownInputComponent,
     DateRangePickerComponent,
+    ButtonComponent,
+    SearchActionsComponent,
   ],
 })
 export class SharedModule {}

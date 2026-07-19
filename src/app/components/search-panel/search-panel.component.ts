@@ -1,6 +1,13 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { SearchFilter } from '../../models/SearchFilter';
+import { DropdownOption } from '../../shared/components/dropdown-input/dropdown-input.component';
+
+type SearchParams = {
+  errorCode: string;
+  severity: string;
+  from: Date | null;
+  to: Date | null;
+};
 
 @Component({
   selector: 'app-search-panel',
@@ -9,46 +16,64 @@ import { SearchFilter } from '../../models/SearchFilter';
 })
 export class SearchPanelComponent {
   @Output() search = new EventEmitter<SearchFilter>();
-  searchForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
-    this.searchForm = this.fb.group({
-      vehicleId: [''],
-      errorCode: [''],
-      severity: [''],
-      from: [''],
-      to: [''],
-    });
+  readonly severityOptions: DropdownOption[] = [
+    { label: 'Low', value: 'low' },
+    { label: 'Medium', value: 'medium' },
+    { label: 'High', value: 'high' },
+    { label: 'Critical', value: 'critical' },
+  ];
+
+  searchParams: SearchParams = this.defaultParams();
+
+  onErrorCodeChange(value: string): void {
+    this.searchParams.errorCode = value ?? '';
+  }
+
+  onSeverityChange(value: string): void {
+    this.searchParams.severity = value ?? '';
+  }
+
+  onFromDateChange(value: Date | null): void {
+    this.searchParams.from = value;
+  }
+
+  onToDateChange(value: Date | null): void {
+    this.searchParams.to = value;
   }
 
   onSubmit(): void {
-    if (this.searchForm.valid) {
-      this.search.emit(this.normalizeFilter(this.searchForm.value));
-    }
+    this.search.emit(this.normalizeFilter(this.searchParams));
   }
 
   onReset(): void {
-    this.searchForm.reset({
-      vehicleId: '',
-      errorCode: '',
-      severity: '',
-      from: '',
-      to: '',
-    });
-    this.search.emit(this.normalizeFilter(this.searchForm.value));
+    this.searchParams = this.defaultParams();
+    this.search.emit(this.normalizeFilter(this.searchParams));
   }
 
-  private normalizeFilter(value: any): SearchFilter {
+  private defaultParams(): SearchParams {
     return {
-      vehicleId: value.vehicleId?.trim() || '',
-      errorCode: value.errorCode?.trim() || '',
-      severity: value.severity || '',
-      from: value.from || '',
-      to: value.to || '',
+      errorCode: '',
+      severity: '',
+      from: null,
+      to: null,
     };
   }
 
-  get vehicleId() {
-    return this.searchForm.get('vehicleId');
+  private normalizeFilter(value: SearchParams): SearchFilter {
+    return {
+      vehicleId: '',
+      errorCode: value.errorCode?.trim() || '',
+      severity: value.severity || '',
+      from: this.toIsoDate(value.from),
+      to: this.toIsoDate(value.to),
+    };
+  }
+
+  private toIsoDate(value: Date | null): string {
+    if (!value) {
+      return '';
+    }
+    return value.toISOString().split('T')[0];
   }
 }

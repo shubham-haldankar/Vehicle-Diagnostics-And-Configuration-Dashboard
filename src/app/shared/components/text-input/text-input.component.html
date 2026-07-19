@@ -6,6 +6,7 @@
       pInputText
       type="text"
       [(ngModel)]="fieldName"
+      (ngModelChange)="onFieldNameChange($event)"
       [placeholder]="placeholder"
       class="search-input"
     />
