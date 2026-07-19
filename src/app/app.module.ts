@@ -8,21 +8,22 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { HttpClientModule } from '@angular/common/http';
-import { LogsEffects } from './store/effects';
-import { logsReducer } from './store/reducer';
+import { LogsEffects } from './store/logs.effects';
+import { logsReducer } from './store/logs.reducer';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { SearchPanelComponent } from './components/search-panel/search-panel.component';
 import { SharedModule } from './shared/shared.module';
 
 @NgModule({
-  declarations: [AppComponent, SearchResultsComponent, SearchPanelComponent],
+  declarations: [AppComponent, SearchPanelComponent, SearchResultsComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     SharedModule,
-    StoreModule.forRoot({}, {}),
-    StoreModule.forFeature('logs', logsReducer),
+    StoreModule.forRoot({ logs: logsReducer }),
     EffectsModule.forRoot([LogsEffects]),
+    StoreDevtoolsModule.instrument({ maxAge: 50, logOnly: false }),
     HttpClientModule,
   ],
   providers: [],
