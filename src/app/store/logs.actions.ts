@@ -4,7 +4,7 @@ import { LogEntry } from '../models/log-entry.model';
 
 export const loadLogs = createAction(
   '[Logs] Load Logs',
-  props<{ filter: SearchFilter }>(),
+  props<{ searchFilter: SearchFilter }>(),
 );
 export const loadLogsSuccess = createAction(
   '[Logs] Load Logs Success',

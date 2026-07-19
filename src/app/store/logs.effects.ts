@@ -9,8 +9,8 @@ export class LogsEffects {
   loadLogs$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadLogs),
-      switchMap(({ filter }) =>
-        this.logsApiService.getLogs(filter).pipe(
+      switchMap(({ searchFilter }) =>
+        this.logsApiService.getLogs(searchFilter).pipe(
           map((logs) => loadLogsSuccess({ logs })),
           catchError((err) => of(loadLogsFailure({ error: err.message }))),
         ),

@@ -14,8 +14,8 @@ export class AppComponent {
 
   constructor(private store: Store) {}
 
-  onSearch(filter: SearchFilter) {
-    console.log(filter);
-    this.store.dispatch(loadLogs({ filter }));
+  onSearch(searchFilter: SearchFilter) {
+    console.log(searchFilter);
+    this.store.dispatch(loadLogs({ searchFilter }));
   }
 }
