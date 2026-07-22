@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { SearchFilter } from '../../models/search-filter';
+import { SearchDto } from '../../models/search-dto';
 
 type SearchParams = {
   errorCode: string;
@@ -14,7 +14,7 @@ type SearchParams = {
   styleUrls: ['./search-panel.component.css'],
 })
 export class SearchPanelComponent {
-  @Output() search = new EventEmitter<SearchFilter>();
+  @Output() search = new EventEmitter<SearchDto>();
 
   searchParams: SearchParams = this.defaultParams();
 
@@ -35,12 +35,12 @@ export class SearchPanelComponent {
   }
 
   onSubmit(): void {
-    this.search.emit(this.normalizeFilter(this.searchParams));
+    this.search.emit(this.normalizeDto(this.searchParams));
   }
 
   onReset(): void {
     this.searchParams = this.defaultParams();
-    this.search.emit(this.normalizeFilter(this.searchParams));
+    this.search.emit(this.normalizeDto(this.searchParams));
   }
 
   private defaultParams(): SearchParams {
@@ -52,13 +52,13 @@ export class SearchPanelComponent {
     };
   }
 
-  private normalizeFilter(value: SearchParams): SearchFilter {
+  private normalizeDto(value: SearchParams): SearchDto {
     return {
       vehicleId: '',
       errorCode: value.errorCode?.trim() || '',
       severity: value.severity || '',
-      from: this.toIsoDate(value.from),
-      to: this.toIsoDate(value.to),
+      fromDate: this.toIsoDate(value.from),
+      toDate: this.toIsoDate(value.to),
     };
   }
 

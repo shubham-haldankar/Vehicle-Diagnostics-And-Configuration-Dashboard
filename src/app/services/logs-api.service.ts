@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { SearchFilter } from '../models/search-filter';
+import { SearchDto } from '../models/search-dto';
 import { Observable } from 'rxjs';
 import { LogEntry } from '../models/log-entry.model';
 import { environment } from 'src/environments/environment';
@@ -13,11 +13,11 @@ export class LogsApiService {
 
   constructor(private http: HttpClient) {}
 
-  getLogs(filter: SearchFilter): Observable<LogEntry[]> {
+  getLogs(searchDto: SearchDto): Observable<LogEntry[]> {
     let params = new HttpParams();
 
     // Add query params only if they exist
-    Object.entries(filter).forEach(([key, value]) => {
+    Object.entries(searchDto).forEach(([key, value]) => {
       if (value) {
         params = params.set(key, value);
       }

@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { loadLogs } from './store/logs.actions';
-import { SearchFilter } from './models/search-filter';
+import { SearchDto } from './models/search-dto';
 import { selectLogs } from './store/logs.selectors';
 
 @Component({
@@ -9,13 +9,15 @@ import { selectLogs } from './store/logs.selectors';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   logs$ = this.store.select(selectLogs);
 
   constructor(private store: Store) {}
 
-  onSearch(searchFilter: SearchFilter) {
-    console.log(searchFilter);
-    this.store.dispatch(loadLogs({ searchFilter }));
+  ngOnInit(): void {
+    const searchDto: SearchDto = {
+      /* initialize with appropriate values */
+    };
+    this.store.dispatch(loadLogs({ searchDto }));
   }
 }

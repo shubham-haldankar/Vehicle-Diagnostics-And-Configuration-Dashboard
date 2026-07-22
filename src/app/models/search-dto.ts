@@ -1,4 +1,4 @@
-export interface SearchFilter {
+export interface SearchDto {
   vehicleId?: string;
   errorCode?: string;
   severity?: string;

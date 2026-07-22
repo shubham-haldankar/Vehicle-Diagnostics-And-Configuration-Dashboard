@@ -1,10 +1,10 @@
 import { createAction, props } from '@ngrx/store';
-import { SearchFilter } from '../models/search-filter';
+import { SearchDto } from '../models/search-dto';
 import { LogEntry } from '../models/log-entry.model';
 
 export const loadLogs = createAction(
   '[Logs] Load Logs',
-  props<{ searchFilter: SearchFilter }>(),
+  props<{ searchDto: SearchDto }>(),
 );
 export const loadLogsSuccess = createAction(
   '[Logs] Load Logs Success',
