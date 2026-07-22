@@ -1,71 +1,79 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SearchDto } from '../../models/search-dto';
-
-type SearchParams = {
-  errorCode: string;
-  severity: string;
-  from: Date | null;
-  to: Date | null;
-};
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { LogsSandbox } from 'src/app/logs.sandbox';
 
 @Component({
   selector: 'app-search-panel',
   templateUrl: './search-panel.component.html',
   styleUrls: ['./search-panel.component.css'],
 })
-export class SearchPanelComponent {
-  @Output() search = new EventEmitter<SearchDto>();
+export class SearchPanelComponent implements OnInit {
+  searchForm!: FormGroup;
+  searchDto: SearchDto = this.defaultDto();
 
-  searchParams: SearchParams = this.defaultParams();
+  constructor(
+    private fb: FormBuilder,
+    private logsSandbox: LogsSandbox,
+  ) {}
 
-  onErrorCodeChange(value: string): void {
-    this.searchParams.errorCode = value ?? '';
+  ngOnInit(): void {
+    this.searchForm = this.fb.group({
+      vehicleId: [''],
+      errorCode: [''],
+      severity: [''],
+      fromDate: [''],
+      toDate: [''],
+    });
   }
 
-  onSeverityChange(value: string): void {
-    this.searchParams.severity = value ?? '';
+  onSearch(): void {
+    this.searchDto = this.createSearchDto();
+    this.logsSandbox.loadLogs(this.searchDto);
   }
 
-  onFromDateChange(value: Date | null): void {
-    this.searchParams.from = value;
+  onClear(): void {
+    this.searchForm.reset();
+    this.searchDto = this.defaultDto();
   }
 
-  onToDateChange(value: Date | null): void {
-    this.searchParams.to = value;
-  }
-
-  onSubmit(): void {
-    this.search.emit(this.normalizeDto(this.searchParams));
-  }
-
-  onReset(): void {
-    this.searchParams = this.defaultParams();
-    this.search.emit(this.normalizeDto(this.searchParams));
-  }
-
-  private defaultParams(): SearchParams {
-    return {
-      errorCode: '',
-      severity: '',
-      from: null,
-      to: null,
-    };
-  }
-
-  private normalizeDto(value: SearchParams): SearchDto {
+  private defaultDto(): SearchDto {
     return {
       vehicleId: '',
-      errorCode: value.errorCode?.trim() || '',
-      severity: value.severity || '',
-      fromDate: this.toIsoDate(value.from),
-      toDate: this.toIsoDate(value.to),
+      errorCode: '',
+      severity: '',
+      fromDate: '',
+      toDate: '',
     };
   }
 
-  private toIsoDate(value: Date | null): string {
-    if (!value) {
-      return '';
-    }
-    return value.toISOString().split('T')[0];
+  private createSearchDto(): SearchDto {
+    return {
+      vehicleId: this.vehicleId?.value.trim() || '',
+      errorCode: this.errorCode?.value.trim() || '',
+      severity: this.severity?.value || '',
+      fromDate: this.fromDate?.value || '',
+      toDate: this.toDate?.value || '',
+    };
+  }
+
+  get vehicleId() {
+    return this.searchForm.get('vehicleId');
+  }
+
+  get errorCode() {
+    return this.searchForm.get('errorCode');
+  }
+
+  get severity() {
+    return this.searchForm.get('severity');
+  }
+
+  get fromDate() {
+    return this.searchForm.get('fromDate');
+  }
+
+  get toDate() {
+    return this.searchForm.get('toDate');
   }
 }
