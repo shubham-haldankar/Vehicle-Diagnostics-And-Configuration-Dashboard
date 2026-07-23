@@ -11,6 +11,7 @@ import { SearchDto } from './models/search-dto';
 export class LogsSandbox {
   logs$ = this.store.select(LogsSelectors.selectLogs);
   loading$ = this.store.select(LogsSelectors.selectLoading);
+  error$ = this.store.select(LogsSelectors.selectError);
 
   constructor(private store: Store) {}
 
