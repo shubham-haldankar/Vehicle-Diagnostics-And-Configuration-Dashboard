@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { SearchDto } from '../models/search-dto';
 import { Observable } from 'rxjs';
 import { LogEntry } from '../models/log-entry.model';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
   providedIn: 'root',

@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: '/api', // reverse-proxied in production
+  apiUrl: 'https://vehicle-diagnostics-and-configuration.onrender.com/', // reverse-proxied in production
 };
