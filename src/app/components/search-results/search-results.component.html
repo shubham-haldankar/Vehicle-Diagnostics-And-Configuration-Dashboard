@@ -1,25 +1,266 @@
-<h3>Search Results</h3>
+<section class="space-y-3" aria-label="Diagnostic logs search results">
+  <!-- Toolbar -->
+  <div class="flex items-center justify-between gap-4">
+    <span
+      class="text-xs text-[#6b7280] font-mono"
+      role="status"
+      aria-live="polite"
+    >
+      <strong class="text-[#e8eaf0]">{{ (logs$ | async)?.length ?? 0 }}</strong>
+      results
+      <span *ngIf="loading$ | async" class="text-amber-400 ml-2 animate-pulse"
+        >querying...</span
+      >
+    </span>
+    <button
+      (click)="exportCSV()"
+      class="flex items-center gap-1.5 px-3 py-1.5 text-[9px] font-mono border border-white/[0.07] text-[#6b7280] hover:text-[#e8eaf0] hover:border-white/20 transition-colors"
+      aria-label="Export filtered results as CSV"
+    >
+      <svg
+        class="w-2.5 h-2.5"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+        <polyline points="7 10 12 15 17 10" />
+        <line x1="12" y1="15" x2="12" y2="3" />
+      </svg>
+      EXPORT CSV
+    </button>
+  </div>
 
-<table class="table table-striped table-bordered" *ngIf="logs">
-    <thead>
-      <tr>
-        <th>Sr No.</th>
-        <th>Vehicle ID</th>
-        <th>Date Time Created</th>
-        <th>Log Type</th>
-        <th>Code</th>
-        <th>Message</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let log of logs; let i=index">
-        <td>{{ i+1 }}</td>
-        <td>{{ log.vehicleId }}</td>
-        <td>{{ log.dateTimeCreated  | date:'short'}}</td>
-        <td>{{ log.type }}</td>
-        <td>{{ log.code }}</td>
-        <td>{{ log.message }}</td>
-      </tr>
-    </tbody>
-  </table>
-  
+  <!-- Loading bar -->
+  <div
+    *ngIf="loading$ | async"
+    class="h-0.5 bg-white/[0.05] overflow-hidden"
+    role="alert"
+    aria-label="Loading"
+  >
+    <div
+      class="h-full bg-amber-400/70 animate-[slide_1s_ease-in-out_infinite]"
+      style="width: 40%"
+    ></div>
+  </div>
+
+  <!-- Error -->
+  <div
+    *ngIf="error$ | async as err"
+    class="px-4 py-3 bg-red-500/10 border border-red-500/30 text-red-400 text-xs font-mono"
+    role="alert"
+  >
+    {{ err }}
+  </div>
+
+  <!-- Table -->
+  <div class="bg-[#111318] border border-white/[0.07] overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full border-collapse" aria-label="Logs">
+        <thead>
+          <tr class="border-b border-white/[0.07] bg-[#0c0d10]/50">
+            <th
+              *ngFor="let col of columns"
+              scope="col"
+              [class]="
+                col.cls +
+                ' text-left px-4 py-3 text-[9px] tracking-[0.15em] font-mono text-[#6b7280] ' +
+                (col.field ? 'cursor-pointer hover:bg-white/5 select-none' : '')
+              "
+              (click)="col.field ? onSort(col.field) : null"
+              [attr.aria-sort]="
+                col.field
+                  ? sortField === col.field
+                    ? sortDir === 'asc'
+                      ? 'ascending'
+                      : 'descending'
+                    : 'none'
+                  : null
+              "
+            >
+              <div class="flex items-center gap-1">
+                {{ col.label }}
+                <span *ngIf="col.field" class="text-[9px]" aria-hidden="true">
+                  <span
+                    *ngIf="sortField === col.field && sortDir === 'asc'"
+                    class="text-amber-400"
+                    >↑</span
+                  >
+                  <span
+                    *ngIf="sortField === col.field && sortDir === 'desc'"
+                    class="text-amber-400"
+                    >↓</span
+                  >
+                  <span *ngIf="sortField !== col.field" class="opacity-20"
+                    >↕</span
+                  >
+                </span>
+              </div>
+            </th>
+            <th scope="col" class="w-8 px-2 py-3"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngIf="logs$ | async as logs; else loading">
+            <tr *ngIf="logs.length === 0">
+              <td
+                [attr.colspan]="columns.length + 1"
+                class="px-4 py-14 text-center"
+                role="cell"
+              >
+                <div class="flex flex-col items-center gap-3 text-[#6b7280]">
+                  <svg
+                    class="w-6 h-6 opacity-20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                  >
+                    <path
+                      d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+                    />
+                    <polyline points="14 2 14 8 20 8" />
+                  </svg>
+                  <span class="text-xs font-mono">NO LOGS MATCH FILTERS</span>
+                </div>
+              </td>
+            </tr>
+
+            <tr
+              *ngFor="let log of sortedLogs(logs); trackBy: trackById"
+              class="border-b border-white/[0.04] cursor-pointer transition-colors hover:bg-white/[0.025] focus-within:outline focus-within:outline-amber-500/50"
+              tabindex="0"
+              role="row"
+            >
+              <!-- Date Time Created -->
+              <td class="px-4 py-2.5 whitespace-nowrap font-mono">
+                <span class="text-[11px] text-[#e8eaf0]/40">{{
+                  log.dateTimeCreated
+                }}</span>
+                <span class="text-[11px] text-[#e8eaf0]/80 ml-1.5">{{
+                  log.dateTimeCreated
+                }}</span>
+              </td>
+              <!-- Vehicle ID -->
+              <td
+                class="px-4 py-2.5 text-[11px] text-sky-400 font-bold font-mono"
+              >
+                {{ log.vehicleId }}
+              </td>
+              <!-- Severity badge -->
+              <td class="px-4 py-2.5">
+                <span
+                  [ngClass]="severityClass(log.type)"
+                  class="inline-flex items-center gap-1 px-1.5 py-px border text-[9px] font-bold tracking-[0.1em] font-mono"
+                >
+                  <svg
+                    class="w-2 h-2"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    *ngIf="log.type === 'ERROR'"
+                  >
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="12" y1="8" x2="12" y2="12" />
+                    <line x1="12" y1="16" x2="12.01" y2="16" />
+                  </svg>
+                  <svg
+                    class="w-2 h-2"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    *ngIf="log.type === 'WARN'"
+                  >
+                    <path
+                      d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"
+                    />
+                    <line x1="12" y1="9" x2="12" y2="13" />
+                    <line x1="12" y1="17" x2="12.01" y2="17" />
+                  </svg>
+                  <svg
+                    class="w-2 h-2"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    *ngIf="log.type === 'INFO'"
+                  >
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="12" y1="16" x2="12" y2="12" />
+                    <line x1="12" y1="8" x2="12.01" y2="8" />
+                  </svg>
+                  {{ log.type }}
+                </span>
+              </td>
+              <!-- Code -->
+              <td
+                class="px-4 py-2.5 text-[11px] text-[#e8eaf0] font-bold font-mono"
+              >
+                {{ log.code }}
+              </td>
+              <!-- Description -->
+              <td class="px-4 py-2.5 max-w-0">
+                <span
+                  class="text-[11px] text-[#6b7280] block truncate"
+                  [title]="log.message"
+                >
+                  {{ log.message }}
+                </span>
+              </td>
+            </tr>
+          </ng-container>
+
+          <ng-template #loading>
+            <tr *ngFor="let i of [1, 2, 3, 4, 5]">
+              <td [attr.colspan]="columns.length + 1" class="px-4 py-3">
+                <div class="h-3 bg-white/[0.04] animate-pulse rounded-sm"></div>
+              </td>
+            </tr>
+          </ng-template>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    <div
+      *ngIf="totalPages > 1"
+      class="border-t border-white/[0.07] px-4 py-3 flex items-center justify-between gap-4 flex-wrap"
+    >
+      <button
+        (click)="prevPage()"
+        [disabled]="page === 1"
+        class="px-3 py-1.5 text-[9px] font-mono border border-white/[0.07] text-[#6b7280] hover:text-[#e8eaf0] hover:border-white/20 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+        aria-label="Previous page"
+      >
+        ← PREV
+      </button>
+      <div class="flex items-center gap-1 flex-wrap">
+        <button
+          *ngFor="let p of pageNumbers"
+          (click)="goToPage(p)"
+          [ngClass]="
+            p === page
+              ? ['border-amber-500/60', 'bg-amber-500/15', 'text-amber-400']
+              : ['border-white/[0.07]', 'text-[#6b7280]']
+          "
+          class="w-8 h-8 text-[9px] font-mono border transition-colors hover:border-white/20 hover:text-[#e8eaf0]"
+          [attr.aria-label]="'Page ' + p"
+          [attr.aria-current]="p === page ? 'page' : null"
+        >
+          {{ p }}
+        </button>
+      </div>
+      <button
+        (click)="nextPage()"
+        [disabled]="page === totalPages"
+        class="px-3 py-1.5 text-[9px] font-mono border border-white/[0.07] text-[#6b7280] hover:text-[#e8eaf0] hover:border-white/20 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+        aria-label="Next page"
+      >
+        NEXT →
+      </button>
+    </div>
+  </div>
+</section>

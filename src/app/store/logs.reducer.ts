@@ -16,7 +16,11 @@ const initialState: LogsState = {
 
 export const logsReducer = createReducer(
   initialState,
-  on(loadLogs, (state) => ({ ...state, loading: true, error: null })),
+  on(loadLogs, (state) => ({
+    ...state,
+    loading: true,
+    error: null,
+  })),
   on(loadLogsSuccess, (state, { logs }) => ({
     ...state,
     logs,
