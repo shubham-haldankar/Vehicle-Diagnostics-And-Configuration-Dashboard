@@ -6,3 +6,12 @@ export interface LogEntry {
   message: string;
   type: string;
 }
+
+export interface LogsStats {
+  total: number;
+  errors: number;
+  warns: number;
+  infos: number;
+  vehicles: number;
+  codes: number;
+}
