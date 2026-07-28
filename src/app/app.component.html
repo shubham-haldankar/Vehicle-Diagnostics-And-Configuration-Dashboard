@@ -1,34 +1,72 @@
-<div class="app-shell">
+<div
+  class="min-h-screen bg-[#0c0d10] text-[#e8eaf0]"
+  style="font-family: &quot;Inter&quot;, sans-serif"
+>
   <!-- ── Header ── -->
-  <header class="app-header" role="banner">
-    <div class="header-inner"></div>
-  </header>
-
-  <!-- ── Main layout ── -->
-  <main class="container-fluid app-main">
-    <div class="row g-4">
-      <div class="col-12 col-lg-3">
-        <app-search-panel></app-search-panel>
-      </div>
-      <div class="col-12 col-lg-9">
-        <div class="d-flex flex-column gap-3">
-          <app-search-results></app-search-results>
+  <header
+    class="sticky top-0 z-30 border-b border-white/[0.07] bg-[#0c0d10]/90 backdrop-blur-xl"
+  >
+    <div
+      class="max-w-[1400px] mx-auto px-6 h-14 flex items-center justify-between gap-4"
+    >
+      <div class="flex items-center gap-3">
+        <div
+          class="w-8 h-8 border border-amber-500/50 bg-amber-500/10 flex items-center justify-center"
+        >
+          <svg
+            class="w-4 h-4 text-amber-400"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M5 11l1.5-4A2 2 0 0 1 8.4 5h7.2a2 2 0 0 1 1.9 1.5L19 11" />
+            <path d="M3 11h18v5a1 1 0 0 1-1 1h-1v-1H5v1H4a1 1 0 0 1-1-1v-5z" />
+            <circle cx="7" cy="16" r="1.5" />
+            <circle cx="17" cy="16" r="1.5" />
+          </svg>
         </div>
+        <span
+          class="text-base font-bold tracking-[0.2em] uppercase"
+          style="font-family: &quot;Rajdhani&quot;, sans-serif"
+          >Vehicle Diagnostics Dashboard</span
+        >
       </div>
     </div>
+  </header>
+
+  <!-- ── Page body ── -->
+  <main
+    class="max-w-[1400px] mx-auto px-4 sm:px-6 py-6 space-y-5"
+    id="main-content"
+    role="main"
+  >
+    <!-- ── SECTION 1 — KPI CARDS ── -->
+
+    <!-- ── SECTION 2 — SEARCH FORM ── -->
+    <app-search-panel></app-search-panel>
+
+    <!-- ── SECTION 3 — SEVERITY MIX ── -->
+
+    <!-- ── SECTION 4 — RESULTS TABLE ── -->
+    <app-search-results></app-search-results>
   </main>
 
   <!-- ── Footer ── -->
-  <footer class="app-footer" role="contentinfo">
-    <span class="footer-copy"
-      >VEHICLE DIAGNOSTICS AND CONFIGURATION DASHBOARD — Angular 16 + NgRx +
-      Express.js + Node.js</span
+  <footer
+    class="border-t border-white/[0.07] mt-8 py-4 px-6 bg-[#111318]/30"
+    role="contentinfo"
+  >
+    <div
+      class="max-w-[1400px] mx-auto flex items-center justify-between gap-4 flex-wrap"
     >
-
-    <div class="footer-tech">
-      <span>REST API v1</span><span>·</span> <span>Angular 16</span
-      ><span>·</span> <span>NgRx</span><span>·</span>
-      <span>TypeScript</span>
+      <span class="text-[9px] font-mono text-[#6b7280]/40 tracking-wider">
+        VEHICLE DIAGNOSTICS DASHBOARD — Angular 16 + TailwindCSS + NgRx +
+        Express.js + Node.js
+      </span>
     </div>
   </footer>
 </div>
