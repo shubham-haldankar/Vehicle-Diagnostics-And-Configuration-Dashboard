@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { loadLogs } from './store/logs.actions';
 import { SearchDto } from './models/search-dto';
-import { selectLogs } from './store/logs.selectors';
+import { LogsStats } from './models/log-entry.model';
+import { LogsSandbox } from './logs.sandbox';
 
 @Component({
   selector: 'app-root',
@@ -10,14 +9,51 @@ import { selectLogs } from './store/logs.selectors';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  logs$ = this.store.select(selectLogs);
+  logs$ = this.logsSandbox.logs$;
+  stats$ = this.logsSandbox.stats$;
 
-  constructor(private store: Store) {}
+  constructor(private logsSandbox: LogsSandbox) {}
 
   ngOnInit(): void {
     const searchDto: SearchDto = {
       /* initialize with appropriate values */
     };
-    this.store.dispatch(loadLogs({ searchDto }));
+    this.logsSandbox.loadLogs(searchDto);
+  }
+
+  statItems(s: LogsStats) {
+    const t = s.total || 1;
+    return [
+      {
+        label: 'TOTAL LOGS',
+        value: s.total,
+        sub: 'all entries',
+        color: 'text-[#e8eaf0]',
+      },
+      {
+        label: 'ERRORS',
+        value: s.errors,
+        sub: `${Math.round((s.errors / t) * 100)}%`,
+        color: 'text-red-400',
+      },
+      {
+        label: 'WARNINGS',
+        value: s.warns,
+        sub: `${Math.round((s.warns / t) * 100)}%`,
+        color: 'text-amber-400',
+      },
+      {
+        label: 'VEHICLES',
+        value: s.vehicles,
+        sub: 'unique IDs',
+        color: 'text-sky-400',
+      },
+      {
+        label: 'FAULT CODES',
+        value: s.codes,
+        sub: 'distinct',
+        color: 'text-violet-400',
+      },
+    ];
   }
 }
