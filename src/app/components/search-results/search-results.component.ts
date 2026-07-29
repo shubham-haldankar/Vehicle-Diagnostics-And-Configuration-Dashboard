@@ -94,7 +94,8 @@ export class SearchResultsComponent {
     if (sev === 'ERROR') return 'border-red-500/35 text-red-400 bg-red-500/10';
     if (sev === 'WARN')
       return 'border-amber-500/35 text-amber-400 bg-amber-500/10';
-    return 'border-sky-500/35 text-sky-400 bg-sky-500/10';
+    if (sev === 'INFO') return 'border-sky-500/35 text-sky-400 bg-sky-500/10';
+    return 'border-gray-500/35 text-gray-400 bg-gray-500/10';
   }
 
   exportCSV(): void {
