@@ -3,6 +3,29 @@
   style="font-family: &quot;Inter&quot;, sans-serif"
 >
   <!-- ── Status strip ── -->
+  <div class="border-b border-white/[0.07] bg-[#111318]/50 h-7">
+    <div
+      class="max-w-[1400px] mx-auto px-6 h-full flex items-center justify-between"
+    >
+      <div class="flex items-center gap-5 text-[9px] font-mono">
+        <span class="flex items-center gap-1.5">
+          <span
+            class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"
+          ></span>
+          <span class="text-emerald-400">REST API — LIVE</span>
+        </span>
+        <span
+          class="text-[#6b7280] hidden sm:block"
+          *ngIf="stats$ | async as s"
+        >
+          {{ s.total }} ENTRIES · {{ s.vehicles }} VEHICLES
+        </span>
+      </div>
+      <span class="text-[9px] font-mono text-[#6b7280]/40 hidden md:block">
+        CONNECTED VEHICLES DIAGNOSTICS PLATFORM v2.4
+      </span>
+    </div>
+  </div>
 
   <!-- ── Header ── -->
   <header
