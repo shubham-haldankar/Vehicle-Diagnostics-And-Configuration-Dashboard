@@ -71,6 +71,8 @@ export class SearchResultsComponent {
   }
 
   onSort(field: SortField): void {
+    this.page = 1; // Reset to first page on sort
+    this.goToPage(1); // Reset to first page on sort
     this.sortDir =
       this.sortField === field && this.sortDir === 'desc' ? 'asc' : 'desc';
     this.sortField = field;
