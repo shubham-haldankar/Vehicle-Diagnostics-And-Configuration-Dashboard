@@ -47,6 +47,7 @@ export class SearchResultsComponent {
   ngOnInit(): void {
     this.logsSandbox.loadLogs(this.defaultDto());
     this.logs$.subscribe((logs) => {
+      this.page = 1;
       console.log('Logs received in SearchResultsComponent:', logs[0]);
       this.totalPages = Math.max(1, Math.ceil(logs.length / this.pageSize));
       this.pageNumbers = Array.from(
@@ -85,9 +86,16 @@ export class SearchResultsComponent {
   }
   nextPage(): void {
     if (this.page < this.totalPages) this.page++;
+    this.goToPage(this.page);
   }
   goToPage(p: number): void {
     this.page = p;
+    const start = Math.max(1, Math.min(p - 3, this.totalPages - 7));
+    const end = Math.min(this.totalPages, Math.max(p + 4, 8));
+    this.pageNumbers = Array.from(
+      { length: end - start + 1 },
+      (_, i) => start + i,
+    );
   }
 
   severityClass(sev: string): string {
