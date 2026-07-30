@@ -36,6 +36,7 @@ export class SearchPanelComponent implements OnInit {
     this.searchForm.reset();
     this.searchForm.patchValue(this.defaultDto());
     this.searchDto = this.defaultDto();
+    this.logsSandbox.loadLogs(this.searchDto);
   }
 
   private defaultDto(): SearchDto {
