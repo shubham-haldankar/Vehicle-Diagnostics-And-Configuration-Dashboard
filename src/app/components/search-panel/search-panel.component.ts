@@ -34,6 +34,7 @@ export class SearchPanelComponent implements OnInit {
 
   onClear(): void {
     this.searchForm.reset();
+    this.searchForm.patchValue(this.defaultDto());
     this.searchDto = this.defaultDto();
   }
 
@@ -49,8 +50,8 @@ export class SearchPanelComponent implements OnInit {
 
   private createSearchDto(): SearchDto {
     return {
-      vehicleId: this.vehicleId?.value.trim() || '',
-      errorCode: this.errorCode?.value.trim() || '',
+      vehicleId: this.vehicleId?.value?.trim() || '',
+      errorCode: this.errorCode?.value?.trim() || '',
       severity: this.severity?.value || '',
       fromDate: this.fromDate?.value || '',
       toDate: this.toDate?.value || '',
