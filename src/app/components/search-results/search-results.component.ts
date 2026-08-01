@@ -34,7 +34,7 @@ export class SearchResultsComponent {
     },
     {
       label: 'SEVERITY',
-      field: 'type' as SortField,
+      field: 'logType' as SortField,
       cls: 'w-20 min-w-[80px]',
     },
     { label: 'CODE', field: 'code' as SortField, cls: 'w-24 min-w-[96px]' },
@@ -63,23 +63,21 @@ export class SearchResultsComponent {
     });
   }
 
-  sortedLogs(entries: LogEntry[]): LogEntry[] {
-    const sorted = [...entries].sort((a, b) => {
-      const av = a[this.sortField],
-        bv = b[this.sortField];
-      const cmp = av < bv ? -1 : av > bv ? 1 : 0;
-      return this.sortDir === 'asc' ? cmp : -cmp;
-    });
-    return entries.length > 0 ? sorted : entries;
-  }
-
   onSort(field: SortField): void {
     this.page = 1; // Reset to first page on sort
     this.goToPage(1); // Reset to first page on sort
     this.sortDir =
       this.sortField === field && this.sortDir === 'desc' ? 'asc' : 'desc';
     this.sortField = field;
-    this.page = 1;
+    this.searchDto$
+      .subscribe((dto) => {
+        this.logsSandbox.loadLogs({
+          ...dto,
+          sortBy: this.sortField,
+          sortOrder: this.sortDir,
+        });
+      })
+      .unsubscribe();
   }
 
   trackById(_: number, e: LogEntry): string {

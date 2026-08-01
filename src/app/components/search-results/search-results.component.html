@@ -130,7 +130,7 @@
             </tr>
 
             <tr
-              *ngFor="let log of sortedLogs(result.logs); trackBy: trackById"
+              *ngFor="let log of result.logs; trackBy: trackById"
               class="border-b border-white/[0.04] cursor-pointer transition-colors hover:bg-white/[0.025] focus-within:outline focus-within:outline-amber-500/50"
               tabindex="0"
               role="row"
