@@ -11,7 +11,7 @@ export class LogsEffects {
       ofType(loadLogs),
       switchMap(({ searchDto }) =>
         this.logsApiService.getLogs(searchDto).pipe(
-          map((logs) => loadLogsSuccess({ logs })),
+          map((result) => loadLogsSuccess({ result })),
           catchError((err) => of(loadLogsFailure({ error: err.message }))),
         ),
       ),

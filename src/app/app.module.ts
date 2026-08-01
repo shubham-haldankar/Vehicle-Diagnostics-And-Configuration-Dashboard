@@ -19,7 +19,7 @@ import { SearchPanelComponent } from './components/search-panel/search-panel.com
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    StoreModule.forRoot({ logs: logsReducer }),
+    StoreModule.forRoot({ results: logsReducer }),
     EffectsModule.forRoot([LogsEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 50, logOnly: false }),
     HttpClientModule,

@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
 import { LogsSandbox } from 'src/app/logs.sandbox';
-import { LogEntry } from 'src/app/models/log-entry.model';
+import { LogEntry, SortField } from 'src/app/models/log-entry.model';
 import { SearchDto } from 'src/app/models/search-dto';
-
-type SortField = 'dateTimeCreated' | 'vehicleId' | 'type' | 'code';
 
 @Component({
   selector: 'app-search-results',
@@ -11,7 +9,7 @@ type SortField = 'dateTimeCreated' | 'vehicleId' | 'type' | 'code';
   styleUrls: ['./search-results.component.css'],
 })
 export class SearchResultsComponent {
-  logs$ = this.logsSandbox.logs$;
+  result$ = this.logsSandbox.result$;
   loading$ = this.logsSandbox.loading$;
   error$ = this.logsSandbox.error$;
 
@@ -46,14 +44,20 @@ export class SearchResultsComponent {
 
   ngOnInit(): void {
     this.logsSandbox.loadLogs(this.defaultDto());
-    this.logs$.subscribe((logs) => {
-      this.page = 1;
-      console.log('Logs received in SearchResultsComponent:', logs[0]);
-      this.totalPages = Math.max(1, Math.ceil(logs.length / this.pageSize));
-      this.pageNumbers = Array.from(
-        { length: Math.min(this.totalPages, 8) },
-        (_, i) => i + 1,
-      );
+
+    this.result$.subscribe({
+      next: ({ logs, stats, offset }) => {
+        this.page = offset / this.pageSize + 1;
+        console.log('Logs received in SearchResultsComponent:', logs[0]);
+        this.totalPages = Math.max(1, Math.ceil(stats.total / this.pageSize));
+        this.pageNumbers = Array.from(
+          { length: Math.min(this.totalPages, 8) },
+          (_, i) => i + 1,
+        );
+      },
+      error: (err) => {
+        console.error(err);
+      },
     });
   }
 
@@ -64,10 +68,7 @@ export class SearchResultsComponent {
       const cmp = av < bv ? -1 : av > bv ? 1 : 0;
       return this.sortDir === 'asc' ? cmp : -cmp;
     });
-    return sorted.slice(
-      (this.page - 1) * this.pageSize,
-      this.page * this.pageSize,
-    );
+    return entries.length > 0 ? sorted : entries;
   }
 
   onSort(field: SortField): void {
@@ -90,6 +91,7 @@ export class SearchResultsComponent {
     if (this.page < this.totalPages) this.page++;
     this.goToPage(this.page);
   }
+
   goToPage(p: number): void {
     this.page = p;
     const start = Math.max(1, Math.min(p - 3, this.totalPages - 7));
@@ -98,6 +100,10 @@ export class SearchResultsComponent {
       { length: end - start + 1 },
       (_, i) => start + i,
     );
+    this.logsSandbox.loadLogs({
+      ...this.defaultDto(),
+      offset: (this.page - 1) * this.pageSize,
+    });
   }
 
   severityClass(sev: string): string {
@@ -109,8 +115,8 @@ export class SearchResultsComponent {
   }
 
   exportCSV(): void {
-    this.logs$
-      .subscribe((logs) => {
+    this.result$
+      .subscribe(({ logs }) => {
         const rows = [
           'DateTimeCreated,VehicleID,Severity,Code,Description',
           ...logs.map(
@@ -136,6 +142,8 @@ export class SearchResultsComponent {
       severity: '',
       fromDate: '',
       toDate: '',
+      limit: 10,
+      offset: (this.page - 1) * this.pageSize,
     };
   }
 }

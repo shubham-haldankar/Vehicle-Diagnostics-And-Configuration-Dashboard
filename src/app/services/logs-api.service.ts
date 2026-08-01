@@ -2,8 +2,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SearchDto } from '../models/search-dto';
 import { Observable } from 'rxjs';
-import { LogEntry } from '../models/log-entry.model';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
+import { SearchResultDto } from '../models/search-result-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +13,7 @@ export class LogsApiService {
 
   constructor(private http: HttpClient) {}
 
-  getLogs(searchDto: SearchDto): Observable<LogEntry[]> {
+  getLogs(searchDto: SearchDto): Observable<SearchResultDto> {
     let params = new HttpParams();
 
     // Add query params only if they exist
@@ -23,6 +23,6 @@ export class LogsApiService {
       }
     });
 
-    return this.http.get<LogEntry[]>(this.baseUrl, { params });
+    return this.http.get<SearchResultDto>(this.baseUrl, { params });
   }
 }

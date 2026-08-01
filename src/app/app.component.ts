@@ -9,14 +9,15 @@ import { LogsSandbox } from './logs.sandbox';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  logs$ = this.logsSandbox.logs$;
-  stats$ = this.logsSandbox.stats$;
+  result$ = this.logsSandbox.result$;
 
   constructor(private logsSandbox: LogsSandbox) {}
 
   ngOnInit(): void {
     const searchDto: SearchDto = {
       /* initialize with appropriate values */
+      limit: 10,
+      offset: 0,
     };
     this.logsSandbox.loadLogs(searchDto);
   }

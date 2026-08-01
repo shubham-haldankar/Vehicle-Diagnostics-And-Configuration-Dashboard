@@ -1,18 +1,23 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { LogsState } from './logs.reducer';
 
-export const selectLogsState = createFeatureSelector<LogsState>('logs');
+export const selectResultsState = createFeatureSelector<LogsState>('results');
 
-export const selectLogs = createSelector(
-  selectLogsState,
-  (state) => state.logs,
-);
+export const selectResult = createSelector(selectResultsState, (state) => ({
+  sortedBy: state.sortedBy,
+  sortedOrder: state.sortedOrder,
+  limit: state.limit,
+  offset: state.offset,
+  logs: state.logs,
+  stats: state.stats,
+}));
+
 export const selectLoading = createSelector(
-  selectLogsState,
+  selectResultsState,
   (state) => state.loading,
 );
 
 export const selectError = createSelector(
-  selectLogsState,
+  selectResultsState,
   (state) => state.error,
 );

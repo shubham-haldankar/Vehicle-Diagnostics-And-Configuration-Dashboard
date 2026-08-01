@@ -15,3 +15,5 @@ export interface LogsStats {
   vehicles: number;
   codes: number;
 }
+
+export type SortField = 'dateTimeCreated' | 'vehicleId' | 'type' | 'code';

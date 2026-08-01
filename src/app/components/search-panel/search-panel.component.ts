@@ -46,6 +46,8 @@ export class SearchPanelComponent implements OnInit {
       severity: '',
       fromDate: '',
       toDate: '',
+      limit: 10,
+      offset: 0,
     };
   }
 
@@ -56,6 +58,8 @@ export class SearchPanelComponent implements OnInit {
       severity: this.severity?.value || '',
       fromDate: this.fromDate?.value || '',
       toDate: this.toDate?.value || '',
+      limit: 10,
+      offset: 0,
     };
   }
 

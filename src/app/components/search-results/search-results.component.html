@@ -6,7 +6,9 @@
       role="status"
       aria-live="polite"
     >
-      <strong class="text-[#e8eaf0]">{{ (logs$ | async)?.length ?? 0 }}</strong>
+      <strong class="text-[#e8eaf0]">{{
+        (result$ | async)?.stats?.total ?? 0
+      }}</strong>
       results
       <span *ngIf="loading$ | async" class="text-amber-400 ml-2 animate-pulse"
         >querying...</span
@@ -102,8 +104,8 @@
           </tr>
         </thead>
         <tbody>
-          <ng-container *ngIf="logs$ | async as logs; else loading">
-            <tr *ngIf="logs.length === 0">
+          <ng-container *ngIf="result$ | async as result; else loading">
+            <tr *ngIf="result.logs.length === 0">
               <td
                 [attr.colspan]="columns.length + 1"
                 class="px-4 py-14 text-center"
@@ -128,7 +130,7 @@
             </tr>
 
             <tr
-              *ngFor="let log of sortedLogs(logs); trackBy: trackById"
+              *ngFor="let log of sortedLogs(result.logs); trackBy: trackById"
               class="border-b border-white/[0.04] cursor-pointer transition-colors hover:bg-white/[0.025] focus-within:outline focus-within:outline-amber-500/50"
               tabindex="0"
               role="row"

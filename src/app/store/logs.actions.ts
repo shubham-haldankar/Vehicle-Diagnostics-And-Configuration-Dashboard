@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { SearchDto } from '../models/search-dto';
-import { LogEntry } from '../models/log-entry.model';
+import { SearchResultDto } from '../models/search-result-dto';
 
 export const loadLogs = createAction(
   '[Logs] Load Logs',
@@ -8,7 +8,7 @@ export const loadLogs = createAction(
 );
 export const loadLogsSuccess = createAction(
   '[Logs] Load Logs Success',
-  props<{ logs: LogEntry[] }>(),
+  props<{ result: SearchResultDto }>(),
 );
 export const loadLogsFailure = createAction(
   '[Logs] Load Logs Failure',
