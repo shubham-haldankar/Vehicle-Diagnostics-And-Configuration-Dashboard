@@ -12,6 +12,11 @@ export const selectResult = createSelector(selectResultsState, (state) => ({
   stats: state.stats,
 }));
 
+export const selectSearchDto = createSelector(
+  selectResultsState,
+  (state) => state.searchDto,
+);
+
 export const selectLoading = createSelector(
   selectResultsState,
   (state) => state.loading,

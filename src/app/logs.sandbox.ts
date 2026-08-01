@@ -9,6 +9,7 @@ import { SearchDto } from './models/search-dto';
 })
 export class LogsSandbox {
   result$ = this.store.select(LogsSelectors.selectResult);
+  searchDto$ = this.store.select(LogsSelectors.selectSearchDto);
   loading$ = this.store.select(LogsSelectors.selectLoading);
   error$ = this.store.select(LogsSelectors.selectError);
 
@@ -16,5 +17,9 @@ export class LogsSandbox {
 
   loadLogs(searchDto: SearchDto): void {
     this.store.dispatch(LogsActions.loadLogs({ searchDto }));
+  }
+
+  setSearchDto(searchDto: SearchDto): void {
+    this.store.dispatch(LogsActions.setSearchDto({ searchDto }));
   }
 }

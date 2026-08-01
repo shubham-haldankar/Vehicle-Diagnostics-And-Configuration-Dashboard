@@ -30,6 +30,7 @@ export class SearchPanelComponent implements OnInit {
   onSearch(): void {
     this.searchDto = this.createSearchDto();
     this.logsSandbox.loadLogs(this.searchDto);
+    this.logsSandbox.setSearchDto(this.searchDto);
   }
 
   onClear(): void {
@@ -37,6 +38,7 @@ export class SearchPanelComponent implements OnInit {
     this.searchForm.patchValue(this.defaultDto());
     this.searchDto = this.defaultDto();
     this.logsSandbox.loadLogs(this.searchDto);
+    this.logsSandbox.setSearchDto(this.searchDto);
   }
 
   private defaultDto(): SearchDto {

@@ -1,6 +1,12 @@
 import { createReducer, on } from '@ngrx/store';
-import { loadLogs, loadLogsFailure, loadLogsSuccess } from './logs.actions';
+import {
+  loadLogs,
+  loadLogsFailure,
+  loadLogsSuccess,
+  setSearchDto,
+} from './logs.actions';
 import { LogEntry, LogsStats, SortField } from '../models/log-entry.model';
+import { SearchDto } from '../models/search-dto';
 
 export interface LogsState {
   sortedBy: SortField;
@@ -9,6 +15,7 @@ export interface LogsState {
   offset: number;
   logs: LogEntry[];
   stats: LogsStats;
+  searchDto?: SearchDto;
   loading: boolean;
   error: string | null;
 }
@@ -27,17 +34,20 @@ const initialState: LogsState = {
     vehicles: 0,
     codes: 0,
   },
+  searchDto: undefined,
   loading: false,
   error: null,
 };
 
 export const logsReducer = createReducer(
   initialState,
+
   on(loadLogs, (state) => ({
     ...state,
     loading: true,
     error: null,
   })),
+
   on(loadLogsSuccess, (state, { result }) => ({
     ...state,
     sortedBy: result.sortedBy,
@@ -48,9 +58,15 @@ export const logsReducer = createReducer(
     stats: result.stats,
     loading: false,
   })),
+
   on(loadLogsFailure, (state, { error }) => ({
     ...state,
     error,
     loading: false,
+  })),
+
+  on(setSearchDto, (state, { searchDto }) => ({
+    ...state,
+    searchDto,
   })),
 );

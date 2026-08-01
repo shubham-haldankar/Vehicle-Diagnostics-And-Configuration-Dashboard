@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { SearchDto } from './models/search-dto';
+import { Component } from '@angular/core';
 import { LogsStats } from './models/log-entry.model';
 import { LogsSandbox } from './logs.sandbox';
 
@@ -8,19 +7,10 @@ import { LogsSandbox } from './logs.sandbox';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   result$ = this.logsSandbox.result$;
 
   constructor(private logsSandbox: LogsSandbox) {}
-
-  ngOnInit(): void {
-    const searchDto: SearchDto = {
-      /* initialize with appropriate values */
-      limit: 10,
-      offset: 0,
-    };
-    this.logsSandbox.loadLogs(searchDto);
-  }
 
   statItems(s: LogsStats) {
     const t = s.total || 1;

@@ -10,6 +10,7 @@ import { SearchDto } from 'src/app/models/search-dto';
 })
 export class SearchResultsComponent {
   result$ = this.logsSandbox.result$;
+  searchDto$ = this.logsSandbox.searchDto$;
   loading$ = this.logsSandbox.loading$;
   error$ = this.logsSandbox.error$;
 
@@ -44,6 +45,7 @@ export class SearchResultsComponent {
 
   ngOnInit(): void {
     this.logsSandbox.loadLogs(this.defaultDto());
+    this.logsSandbox.setSearchDto(this.defaultDto());
 
     this.result$.subscribe({
       next: ({ logs, stats, offset }) => {
@@ -100,10 +102,14 @@ export class SearchResultsComponent {
       { length: end - start + 1 },
       (_, i) => start + i,
     );
-    this.logsSandbox.loadLogs({
-      ...this.defaultDto(),
-      offset: (this.page - 1) * this.pageSize,
-    });
+    this.searchDto$
+      .subscribe((dto) => {
+        this.logsSandbox.loadLogs({
+          ...dto,
+          offset: (this.page - 1) * this.pageSize,
+        });
+      })
+      .unsubscribe();
   }
 
   severityClass(sev: string): string {
