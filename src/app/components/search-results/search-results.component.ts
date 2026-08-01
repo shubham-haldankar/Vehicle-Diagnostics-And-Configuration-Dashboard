@@ -51,12 +51,14 @@ export class SearchResultsComponent {
     this.result$.subscribe({
       next: ({ logs, stats, offset }) => {
         this.page = offset / this.pageSize + 1;
-        console.log('Logs received in SearchResultsComponent:', logs[0]);
         this.totalPages = Math.max(1, Math.ceil(stats.total / this.pageSize));
+        const start = Math.max(1, Math.min(this.page - 3, this.totalPages - 7));
+        const end = Math.min(this.totalPages, Math.max(this.page + 4, 8));
         this.pageNumbers = Array.from(
-          { length: Math.min(this.totalPages, 8) },
-          (_, i) => i + 1,
+          { length: end - start + 1 },
+          (_, i) => start + i,
         );
+        console.log('Logs received in SearchResultsComponent:', logs[0]);
       },
       error: (err) => {
         console.error(err);
@@ -98,13 +100,6 @@ export class SearchResultsComponent {
 
   goToPage(p: number): void {
     this.page = p;
-    const start = Math.max(1, Math.min(p - 3, this.totalPages - 7));
-    const end = Math.min(this.totalPages, Math.max(p + 4, 8));
-    this.pageNumbers = Array.from(
-      { length: end - start + 1 },
-      (_, i) => start + i,
-    );
-
     const nextOffset = (this.page - 1) * this.pageSize;
     this.searchDto$.pipe(take(1)).subscribe((dto) => {
       const current = dto ?? this.defaultDto();
