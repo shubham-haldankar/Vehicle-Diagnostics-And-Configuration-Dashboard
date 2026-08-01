@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { LogsSandbox } from 'src/app/logs.sandbox';
 import { LogEntry, SortField } from 'src/app/models/log-entry.model';
 import { SearchDto } from 'src/app/models/search-dto';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-search-results',
@@ -69,15 +70,16 @@ export class SearchResultsComponent {
     this.sortDir =
       this.sortField === field && this.sortDir === 'desc' ? 'asc' : 'desc';
     this.sortField = field;
-    this.searchDto$
-      .subscribe((dto) => {
-        this.logsSandbox.loadLogs({
-          ...dto,
-          sortBy: this.sortField,
-          sortOrder: this.sortDir,
-        });
-      })
-      .unsubscribe();
+    this.searchDto$.pipe(take(1)).subscribe((dto) => {
+      const nextSearchDto = {
+        ...(dto ?? this.defaultDto()),
+        sortBy: this.sortField,
+        sortOrder: this.sortDir,
+      };
+
+      this.logsSandbox.setSearchDto(nextSearchDto);
+      this.logsSandbox.loadLogs(nextSearchDto);
+    });
   }
 
   trackById(_: number, e: LogEntry): string {
@@ -86,7 +88,9 @@ export class SearchResultsComponent {
 
   prevPage(): void {
     if (this.page > 1) this.page--;
+    this.goToPage(this.page);
   }
+
   nextPage(): void {
     if (this.page < this.totalPages) this.page++;
     this.goToPage(this.page);
@@ -100,14 +104,20 @@ export class SearchResultsComponent {
       { length: end - start + 1 },
       (_, i) => start + i,
     );
-    this.searchDto$
-      .subscribe((dto) => {
-        this.logsSandbox.loadLogs({
-          ...dto,
-          offset: (this.page - 1) * this.pageSize,
-        });
-      })
-      .unsubscribe();
+
+    const nextOffset = (this.page - 1) * this.pageSize;
+    this.searchDto$.pipe(take(1)).subscribe((dto) => {
+      const current = dto ?? this.defaultDto();
+      if (current.offset === nextOffset) return;
+
+      const nextSearchDto = {
+        ...current,
+        offset: nextOffset,
+      };
+
+      this.logsSandbox.setSearchDto(nextSearchDto);
+      this.logsSandbox.loadLogs(nextSearchDto);
+    });
   }
 
   severityClass(sev: string): string {
