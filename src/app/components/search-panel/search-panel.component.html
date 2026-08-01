@@ -72,6 +72,7 @@
           id="fromDate"
           formControlName="fromDate"
           type="date"
+          [class.date-empty]="!searchForm.get('fromDate')?.value"
           class="w-full px-3 py-2 bg-[#0c0d10] border border-white/[0.07] text-[#e8eaf0] focus:outline-none focus:border-amber-500/60 transition-colors text-[11px] font-mono"
           aria-label="From date"
         />
@@ -88,6 +89,7 @@
           id="toDate"
           formControlName="toDate"
           type="date"
+          [class.date-empty]="!searchForm.get('toDate')?.value"
           class="w-full px-3 py-2 bg-[#0c0d10] border border-white/[0.07] text-[#e8eaf0] focus:outline-none focus:border-amber-500/60 transition-colors text-[11px] font-mono"
           aria-label="To date"
         />
