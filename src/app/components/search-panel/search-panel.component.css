@@ -5,13 +5,28 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 input[type="date"]::-webkit-datetime-edit {
+  color: #9da3ae;
+}
+
+input[type="date"]::-webkit-datetime-edit-text,
+input[type="date"]::-webkit-datetime-edit-month-field,
+input[type="date"]::-webkit-datetime-edit-day-field,
+input[type="date"]::-webkit-datetime-edit-year-field {
+  color: #9da3ae;
+}
+
+input[type="date"]:not(.date-empty)::-webkit-datetime-edit,
+input[type="date"]:not(.date-empty)::-webkit-datetime-edit-text,
+input[type="date"]:not(.date-empty)::-webkit-datetime-edit-month-field,
+input[type="date"]:not(.date-empty)::-webkit-datetime-edit-day-field,
+input[type="date"]:not(.date-empty)::-webkit-datetime-edit-year-field {
   color: #e8eaf0;
 }
 
-input[type="date"].date-empty {
-  color: rgba(107, 114, 128, 0.4);
-}
-
-input[type="date"].date-empty::-webkit-datetime-edit {
-  color: rgba(107, 114, 128, 0.4);
+input[type="date"]:focus::-webkit-datetime-edit,
+input[type="date"]:focus::-webkit-datetime-edit-text,
+input[type="date"]:focus::-webkit-datetime-edit-month-field,
+input[type="date"]:focus::-webkit-datetime-edit-day-field,
+input[type="date"]:focus::-webkit-datetime-edit-year-field {
+  color: #e8eaf0;
 }
