@@ -49,10 +49,7 @@
           [ngClass]="severityIconBoxClass()"
           *ngIf="['ERROR', 'WARN', 'INFO'].includes(entry.type)"
         >
-          <app-severity-icon
-            [type]="entry.type"
-            [size]="3.5"
-          ></app-severity-icon>
+          <app-severity-icon [type]="entry.type" [size]="3"></app-severity-icon>
         </div>
         <div>
           <div
