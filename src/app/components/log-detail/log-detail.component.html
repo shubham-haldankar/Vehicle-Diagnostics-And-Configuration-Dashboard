@@ -49,44 +49,7 @@
           [ngClass]="severityIconBoxClass()"
           *ngIf="['ERROR', 'WARN', 'INFO'].includes(entry.type)"
         >
-          <svg
-            *ngIf="entry.type === 'ERROR'"
-            class="w-3.5 h-3.5"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-          >
-            <circle cx="12" cy="12" r="10" />
-            <line x1="12" y1="8" x2="12" y2="12" />
-            <line x1="12" y1="16" x2="12.01" y2="16" />
-          </svg>
-          <svg
-            *ngIf="entry.type === 'WARN'"
-            class="w-3.5 h-3.5"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-          >
-            <path
-              d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"
-            />
-            <line x1="12" y1="9" x2="12" y2="13" />
-            <line x1="12" y1="17" x2="12.01" y2="17" />
-          </svg>
-          <svg
-            *ngIf="entry.type === 'INFO'"
-            class="w-3.5 h-3.5"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-          >
-            <circle cx="12" cy="12" r="10" />
-            <line x1="12" y1="16" x2="12" y2="12" />
-            <line x1="12" y1="8" x2="12.01" y2="8" />
-          </svg>
+          <app-severity-icon [type]="entry.type" size="sm"></app-severity-icon>
         </div>
         <div>
           <div
@@ -135,7 +98,7 @@
         </div>
       </div>
 
-      <!-- Severity + timestamp strip -->
+      <!-- Severity + Date Time Created strip -->
       <div
         class="flex items-center gap-4 px-4 py-3 border"
         [ngClass]="severityStripClass()"
@@ -144,44 +107,7 @@
           class="inline-flex items-center gap-1 px-1.5 py-px border text-[10px] font-bold tracking-[0.1em] font-mono"
           [ngClass]="severityBadgeClass()"
         >
-          <svg
-            class="w-2.5 h-2.5"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2.5"
-            *ngIf="entry.type === 'ERROR'"
-          >
-            <circle cx="12" cy="12" r="10" />
-            <line x1="12" y1="8" x2="12" y2="12" />
-            <line x1="12" y1="16" x2="12.01" y2="16" />
-          </svg>
-          <svg
-            class="w-2.5 h-2.5"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2.5"
-            *ngIf="entry.type === 'WARN'"
-          >
-            <path
-              d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"
-            />
-            <line x1="12" y1="9" x2="12" y2="13" />
-            <line x1="12" y1="17" x2="12.01" y2="17" />
-          </svg>
-          <svg
-            class="w-2.5 h-2.5"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2.5"
-            *ngIf="entry.type === 'INFO'"
-          >
-            <circle cx="12" cy="12" r="10" />
-            <line x1="12" y1="16" x2="12" y2="12" />
-            <line x1="12" y1="8" x2="12.01" y2="8" />
-          </svg>
+          <app-severity-icon [type]="entry.type" size="xs"></app-severity-icon>
           {{ entry.type }}
         </span>
         <div class="flex-1 h-px bg-white/[0.06]"></div>

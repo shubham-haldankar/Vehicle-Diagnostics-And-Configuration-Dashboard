@@ -14,9 +14,16 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { SearchPanelComponent } from './components/search-panel/search-panel.component';
 import { LogoComponent } from './components/logo/logo.component';
 import { LogDetailComponent } from './components/log-detail/log-detail.component';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
-  declarations: [AppComponent, SearchPanelComponent, SearchResultsComponent, LogoComponent, LogDetailComponent],
+  declarations: [
+    AppComponent,
+    SearchPanelComponent,
+    SearchResultsComponent,
+    LogoComponent,
+    LogDetailComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -25,6 +32,7 @@ import { LogDetailComponent } from './components/log-detail/log-detail.component
     EffectsModule.forRoot([LogsEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 50, logOnly: false }),
     HttpClientModule,
+    SharedModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
