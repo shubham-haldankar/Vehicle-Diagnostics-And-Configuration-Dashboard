@@ -19,17 +19,7 @@
       class="flex items-center gap-1.5 px-3 py-1.5 text-[9px] font-mono border border-white/[0.07] text-[#6b7280] hover:text-[#e8eaf0] hover:border-white/20 transition-colors"
       aria-label="Export filtered results as CSV"
     >
-      <svg
-        class="w-2.5 h-2.5"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-      >
-        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-        <polyline points="7 10 12 15 17 10" />
-        <line x1="12" y1="15" x2="12" y2="3" />
-      </svg>
+      <app-button-icon type="download" size="sm"></app-button-icon>
       EXPORT CSV
     </button>
   </div>
@@ -112,18 +102,11 @@
                 role="cell"
               >
                 <div class="flex flex-col items-center gap-3 text-[#6b7280]">
-                  <svg
-                    class="w-6 h-6 opacity-20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                  >
-                    <path
-                      d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
-                    />
-                    <polyline points="14 2 14 8 20 8" />
-                  </svg>
+                  <app-button-icon
+                    type="empty"
+                    size="lg"
+                    [strokeWidth]="1.5"
+                  ></app-button-icon>
                   <span class="text-xs font-mono">NO LOGS MATCH FILTERS</span>
                 </div>
               </td>
@@ -158,44 +141,11 @@
                   [ngClass]="severityClass(log.type)"
                   class="inline-flex items-center gap-1 px-1.5 py-px border text-[9px] font-bold tracking-[0.1em] font-mono"
                 >
-                  <svg
-                    class="w-2 h-2"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2.5"
-                    *ngIf="log.type === 'ERROR'"
-                  >
-                    <circle cx="12" cy="12" r="10" />
-                    <line x1="12" y1="8" x2="12" y2="12" />
-                    <line x1="12" y1="16" x2="12.01" y2="16" />
-                  </svg>
-                  <svg
-                    class="w-2 h-2"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2.5"
-                    *ngIf="log.type === 'WARN'"
-                  >
-                    <path
-                      d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"
-                    />
-                    <line x1="12" y1="9" x2="12" y2="13" />
-                    <line x1="12" y1="17" x2="12.01" y2="17" />
-                  </svg>
-                  <svg
-                    class="w-2 h-2"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2.5"
-                    *ngIf="log.type === 'INFO'"
-                  >
-                    <circle cx="12" cy="12" r="10" />
-                    <line x1="12" y1="16" x2="12" y2="12" />
-                    <line x1="12" y1="8" x2="12.01" y2="8" />
-                  </svg>
+                  <app-severity-icon
+                    [type]="log.type"
+                    [size]="2"
+                    [strokeWidth]="2.5"
+                  ></app-severity-icon>
                   {{ log.type }}
                 </span>
               </td>
