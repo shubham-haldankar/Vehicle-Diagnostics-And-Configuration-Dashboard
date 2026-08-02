@@ -12,9 +12,10 @@ import { LogsEffects } from './store/logs.effects';
 import { logsReducer } from './store/logs.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { SearchPanelComponent } from './components/search-panel/search-panel.component';
+import { LogoComponent } from './components/logo/logo.component';
 
 @NgModule({
-  declarations: [AppComponent, SearchPanelComponent, SearchResultsComponent],
+  declarations: [AppComponent, SearchPanelComponent, SearchResultsComponent, LogoComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
