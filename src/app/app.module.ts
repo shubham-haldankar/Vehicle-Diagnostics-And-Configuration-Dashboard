@@ -12,7 +12,6 @@ import { LogsEffects } from './store/logs.effects';
 import { logsReducer } from './store/logs.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { SearchPanelComponent } from './components/search-panel/search-panel.component';
-import { LogoComponent } from './components/logo/logo.component';
 import { LogDetailComponent } from './components/log-detail/log-detail.component';
 import { SharedModule } from './shared/shared.module';
 
@@ -21,7 +20,6 @@ import { SharedModule } from './shared/shared.module';
     AppComponent,
     SearchPanelComponent,
     SearchResultsComponent,
-    LogoComponent,
     LogDetailComponent,
   ],
   imports: [
