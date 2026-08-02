@@ -39,7 +39,11 @@ export class SearchResultsComponent {
       field: 'logType' as SortField,
       cls: 'w-20 min-w-[80px]',
     },
-    { label: 'CODE', field: 'code' as SortField, cls: 'w-24 min-w-[96px]' },
+    {
+      label: 'FAULT CODE',
+      field: 'code' as SortField,
+      cls: 'w-24 min-w-[96px]',
+    },
     { label: 'DESCRIPTION', field: null, cls: '' },
   ];
 
