@@ -62,7 +62,9 @@ export class SearchResultsComponent {
     this.logsSandbox.setSearchDto(this.defaultDto());
 
     this.result$.subscribe({
-      next: ({ logs, stats, offset }) => {
+      next: ({ sortedBy, sortedOrder, logs, stats, offset }) => {
+        this.sortField = sortedBy ?? 'dateTimeCreated';
+        this.sortDir = sortedOrder ?? 'desc';
         this.page = offset / this.pageSize + 1;
         this.totalPages = Math.max(1, Math.ceil(stats.total / this.pageSize));
         const start = Math.max(1, Math.min(this.page - 3, this.totalPages - 7));
