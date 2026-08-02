@@ -52,7 +52,7 @@ export class LogDetailComponent {
         value: this.entry.code,
         cls: 'text-[#e8eaf0] font-bold',
       },
-      { label: 'SYSTEM', value: system, cls: 'text-[#6b7280]' },
+      { label: 'SYSTEM', value: system, cls: 'text-amber-400' },
     ];
   }
 
