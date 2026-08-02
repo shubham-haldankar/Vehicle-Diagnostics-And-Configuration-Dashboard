@@ -21,6 +21,7 @@ export class SearchResultsComponent {
   pageSize = 10;
   totalPages = 1;
   pageNumbers: number[] = [];
+  activeEntry: LogEntry | null = null;
 
   columns = [
     {
@@ -43,6 +44,14 @@ export class SearchResultsComponent {
   ];
 
   constructor(private logsSandbox: LogsSandbox) {}
+
+  openModal(entry: LogEntry): void {
+    this.activeEntry = entry;
+  }
+
+  closeModal(): void {
+    this.activeEntry = null;
+  }
 
   ngOnInit(): void {
     this.logsSandbox.loadLogs(this.defaultDto());

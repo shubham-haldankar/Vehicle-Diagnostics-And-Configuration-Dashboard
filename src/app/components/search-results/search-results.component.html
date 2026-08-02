@@ -131,7 +131,9 @@
 
             <tr
               *ngFor="let log of result.logs; trackBy: trackById"
-              class="border-b border-white/[0.04] cursor-pointer transition-colors hover:bg-white/[0.025] focus-within:outline focus-within:outline-amber-500/50"
+              (click)="openModal(log)"
+              (keydown.enter)="openModal(log)"
+              class="border-b border-white/[0.04] cursor-pointer transition-colors hover:bg-white/[0.025] focus-visible:outline-none"
               tabindex="0"
               role="row"
             >
@@ -265,4 +267,11 @@
       </button>
     </div>
   </div>
+
+  <!-- Modal — rendered outside table flow, anchored to body via fixed positioning -->
+  <app-log-detail
+    *ngIf="activeEntry"
+    [entry]="activeEntry"
+    (closed)="closeModal()"
+  ></app-log-detail>
 </section>
