@@ -6,7 +6,7 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./button-icon.component.css'],
 })
 export class ButtonIconComponent {
-  @Input() type: 'download' | 'empty' | 'close' = 'download';
+  @Input() type: 'download' | 'empty' | 'close' | 'search' = 'download';
   @Input() size: 'sm' | 'md' | 'lg' = 'sm';
   @Input() strokeWidth = 2;
 }

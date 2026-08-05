@@ -39,3 +39,17 @@
 >
   <path d="M18 6 6 18M6 6l12 12" />
 </svg>
+
+<svg
+  *ngIf="type === 'search'"
+  [class]="
+    size === 'md' ? 'w-3 h-3' : size === 'lg' ? 'w-6 h-6' : 'w-2.5 h-2.5'
+  "
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  [attr.stroke-width]="strokeWidth"
+>
+  <circle cx="11" cy="11" r="8" />
+  <path d="m21 21-4.35-4.35" />
+</svg>
