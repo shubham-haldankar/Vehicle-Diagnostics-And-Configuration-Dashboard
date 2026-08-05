@@ -1,27 +1,16 @@
-<svg
-  [attr.width]="size"
-  [attr.height]="size"
-  viewBox="0 0 40 40"
-  fill="none"
-  xmlns="http://www.w3.org/2000/svg"
-  role="img"
-  aria-label="VehicleDiag logo"
->
-  <!-- Outer hexagon -->
+<svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="VehicleDiag logo">
   <path
     d="M20 2L36.5 11.5V28.5L20 38L3.5 28.5V11.5L20 2Z"
     stroke="#f59e0b"
     stroke-width="1.2"
     fill="rgba(245,158,11,0.06)"
   />
-  <!-- Inner hex ring -->
   <path
     d="M20 7L32 13.5V26.5L20 33L8 26.5V13.5L20 7Z"
     stroke="rgba(245,158,11,0.2)"
     stroke-width="0.6"
     fill="none"
   />
-  <!-- Gear -->
   <g transform="translate(11 11) scale(0.75)" fill="#f59e0b">
     <path
       d="M19.43 12.98c.04-.32.07-.65.07-.98s-.03-.66-.08-.98l2.11-1.65a.5.5 0 0 0 .12-.64l-2-3.46a.5.5 0 0 0-.6-.22l-2.49 1a7.03 7.03 0 0 0-1.69-.98l-.38-2.65A.5.5 0 0 0 14 1h-4a.5.5 0 0 0-.49.42l-.38 2.65c-.61.24-1.18.57-1.69.98l-2.49-1a.5.5 0 0 0-.6.22l-2 3.46a.5.5 0 0 0 .12.64l2.11 1.65c-.05.32-.08.65-.08.98s.03.66.08.98L2.47 14.63a.5.5 0 0 0-.12.64l2 3.46c.13.22.39.31.6.22l2.49-1c.51.41 1.08.74 1.69.98l.38 2.65c.04.24.25.42.49.42h4c.24 0 .45-.18.49-.42l.38-2.65c.61-.24 1.18-.57 1.69-.98l2.49 1c.22.09.47 0 .6-.22l2-3.46a.5.5 0 0 0-.12-.64l-2.11-1.65ZM12 15.5A3.5 3.5 0 1 1 12 8.5a3.5 3.5 0 0 1 0 7Z"
