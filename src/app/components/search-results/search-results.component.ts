@@ -3,6 +3,7 @@ import { LogsSandbox } from 'src/app/logs.sandbox';
 import { LogEntry, SortField } from 'src/app/models/log-entry.model';
 import { SearchDto } from 'src/app/models/search-dto';
 import { take } from 'rxjs/operators';
+import { LogsApiService } from 'src/app/services/logs-api.service';
 
 @Component({
   selector: 'app-search-results',
@@ -47,7 +48,10 @@ export class SearchResultsComponent {
     { label: 'DESCRIPTION', field: null, cls: '' },
   ];
 
-  constructor(private logsSandbox: LogsSandbox) {}
+  constructor(
+    private logsSandbox: LogsSandbox,
+    private logsApiService: LogsApiService,
+  ) {}
 
   openModal(entry: LogEntry): void {
     this.activeEntry = entry;
@@ -139,24 +143,35 @@ export class SearchResultsComponent {
   }
 
   exportCSV(): void {
-    this.result$
-      .subscribe(({ logs }) => {
-        const rows = [
-          'DateTimeCreated,VehicleID,Severity,Code,Description',
-          ...logs.map(
-            (l) =>
-              `"${l.dateTimeCreated}","${l.vehicleId}","${l.type}","${l.code}","${l.message}"`,
-          ),
-        ];
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(
-          new Blob([rows.join('\n')], { type: 'text/csv' }),
-        );
-        a.download = 'diagnostic_logs.csv';
-        a.click();
-        URL.revokeObjectURL(a.href);
-      })
-      .unsubscribe();
+    this.searchDto$.pipe(take(1)).subscribe((dto) => {
+      this.result$.pipe(take(1)).subscribe(({ stats }) => {
+        const fullExportDto: SearchDto = {
+          ...(dto ?? this.defaultDto()),
+          offset: 0,
+          limit: Math.max(stats.total, 1),
+        };
+
+        this.logsApiService
+          .getLogs(fullExportDto)
+          .pipe(take(1))
+          .subscribe(({ records }) => {
+            const rows = [
+              'DateTimeCreated,VehicleID,Severity,Code,Description',
+              ...records.map(
+                (r) =>
+                  `"${r.dateTimeCreated}","${r.vehicleId}","${r.type}","${r.code}","${r.message}"`,
+              ),
+            ];
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(
+              new Blob([rows.join('\n')], { type: 'text/csv' }),
+            );
+            a.download = 'diagnostic_logs.csv';
+            a.click();
+            URL.revokeObjectURL(a.href);
+          });
+      });
+    });
   }
 
   private defaultDto(): SearchDto {
