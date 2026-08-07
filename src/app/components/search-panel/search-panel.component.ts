@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SearchDto } from '../../models/search-dto';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LogsSandbox } from 'src/app/logs.sandbox';
 
 @Component({
@@ -11,6 +11,7 @@ import { LogsSandbox } from 'src/app/logs.sandbox';
 export class SearchPanelComponent implements OnInit {
   searchForm!: FormGroup;
   searchDto: SearchDto = this.defaultDto();
+  hasSearchAttempted = false;
 
   constructor(
     private fb: FormBuilder,
@@ -19,8 +20,11 @@ export class SearchPanelComponent implements OnInit {
 
   ngOnInit(): void {
     this.searchForm = this.fb.group({
-      vehicleId: [''],
-      errorCode: [''],
+      vehicleId: ['', [Validators.pattern(/^\d{4}$/)]],
+      errorCode: [
+        '',
+        [Validators.pattern(/^[BCPU][0-9A-F]{4}(\s*,\s*[BCPU][0-9A-F]{4})*$/i)],
+      ],
       severity: [''],
       fromDate: [''],
       toDate: [''],
@@ -28,12 +32,20 @@ export class SearchPanelComponent implements OnInit {
   }
 
   onSearch(): void {
+    this.hasSearchAttempted = true;
+
+    if (this.searchForm.invalid) {
+      this.searchForm.markAllAsTouched();
+      return;
+    }
+
     this.searchDto = this.createSearchDto();
     this.logsSandbox.loadLogs(this.searchDto);
     this.logsSandbox.setSearchDto(this.searchDto);
   }
 
   onClear(): void {
+    this.hasSearchAttempted = false;
     this.searchForm.reset();
     this.searchForm.patchValue(this.defaultDto());
     this.searchDto = this.defaultDto();
@@ -83,5 +95,13 @@ export class SearchPanelComponent implements OnInit {
 
   get toDate() {
     return this.searchForm.get('toDate');
+  }
+
+  get showVehicleIdError(): boolean {
+    return !!(this.hasSearchAttempted && this.vehicleId?.errors?.['pattern']);
+  }
+
+  get showErrorCodeError(): boolean {
+    return !!(this.hasSearchAttempted && this.errorCode?.errors?.['pattern']);
   }
 }
