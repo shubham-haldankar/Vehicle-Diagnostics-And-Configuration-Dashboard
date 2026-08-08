@@ -1,177 +1,201 @@
 <div
-  class="min-h-screen bg-[#0c0d10] text-[#e8eaf0]"
+  class="min-h-screen bg-[#0c0d10] text-[#e8eaf0] relative"
   style="font-family: &quot;Inter&quot;, sans-serif"
 >
-  <!-- ── Status strip ── -->
-  <div class="border-b border-white/[0.07] bg-[#111318]/50 h-7">
+  <div
+    *ngIf="showRefreshSpinner"
+    class="fixed inset-0 z-50 flex items-center justify-center bg-[#0c0d10]"
+  >
     <div
-      class="max-w-[1400px] mx-auto px-6 h-full flex items-center justify-between"
+      class="flex flex-col items-center gap-3"
+      aria-live="polite"
+      aria-busy="true"
     >
-      <div class="flex items-center gap-5 text-[9px] font-mono">
-        <span class="flex items-center gap-1.5">
-          <span
-            class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"
-          ></span>
-          <span class="text-emerald-400">REST API — LIVE</span>
-        </span>
-        <span
-          class="text-[#6b7280] hidden sm:block"
-          *ngIf="result$ | async as result"
-        >
-          {{ result.stats.total }} ENTRIES ·
-          {{ result.stats.vehicles }} VEHICLES
-        </span>
-      </div>
-      <span class="text-[9px] font-mono text-[#6b7280]/40 hidden md:block">
-        CONNECTED VEHICLES DIAGNOSTICS PLATFORM v2.4
+      <span class="loader-spinner" aria-hidden="true"></span>
+      <span
+        class="text-[10px] tracking-[0.16em] uppercase text-[#6b7280] font-mono"
+      >
+        Loading dashboard
       </span>
     </div>
   </div>
 
-  <!-- ── Header ── -->
-  <header
-    class="sticky top-0 z-30 border-b border-white/[0.07] bg-[#0c0d10]/90 backdrop-blur-xl"
-  >
-    <div
-      class="max-w-[1400px] mx-auto px-6 h-14 flex items-center justify-between gap-4"
-    >
-      <div class="flex items-center gap-3">
-        <img
-          src="assets/logo.svg"
-          alt="Vehicle Diagnostics Dashboard logo"
-          class="w-8 h-8"
-        />
-        <span
-          class="text-base font-bold tracking-[0.2em] uppercase"
-          style="font-family: &quot;Rajdhani&quot;, sans-serif"
-          >Vehicle Diagnostics Dashboard</span
-        >
-      </div>
-    </div>
-  </header>
-
-  <!-- ── Page body ── -->
-  <main
-    class="max-w-[1400px] mx-auto px-4 sm:px-6"
-    id="main-content"
-    role="main"
-  >
-    <!-- ── SECTION 1 — KPI CARDS ── -->
-    <div
-      class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 my-6 mb-4"
-      role="region"
-      aria-label="Diagnostic statistics"
-    >
-      <ng-container *ngIf="result$ | async as result">
-        <div
-          *ngFor="let item of statItems(result.stats)"
-          class="bg-[#111318] border border-white/[0.07] p-4 hover:border-white/15 transition-colors group"
-        >
-          <span
-            class="text-[9px] tracking-[0.18em] uppercase text-[#6b7280] font-mono block mb-3"
-          >
-            {{ item.label }}
-          </span>
-          <div
-            class="text-3xl font-bold leading-none mb-1 {{ item.color }}"
-            style="font-family: &quot;Rajdhani&quot;, sans-serif"
-            [ngClass]="item.color"
-          >
-            {{ item.value }}
-          </div>
-          <div class="text-[9px] text-[#6b7280] font-mono">{{ item.sub }}</div>
-        </div>
-      </ng-container>
-    </div>
-
-    <!-- ── SECTION 2 — SEARCH FORM ── -->
-    <app-search-panel></app-search-panel>
-
-    <!-- ── SECTION 3 — SEVERITY MIX ── -->
-    <div
-      class="bg-[#111318] border border-white/[0.07] px-4 py-3 flex flex-col sm:flex-row sm:items-center gap-3"
-      *ngIf="result$ | async as result"
-      role="region"
-      aria-label="Severity distribution"
-    >
-      <span
-        class="text-[9px] tracking-[0.18em] uppercase text-[#6b7280] font-mono shrink-0"
-      >
-        SEVERITY MIX
-      </span>
+  <div>
+    <!-- ── Status strip ── -->
+    <div class="border-b border-white/[0.07] bg-[#111318]/50 h-7">
       <div
-        class="flex-1 h-2 bg-[#0c0d10]/60 border border-white/[0.05] flex overflow-hidden"
-        role="img"
-        [attr.aria-label]="
-          'Errors: ' +
-          result.stats.errors +
-          ', Warnings: ' +
-          result.stats.warns +
-          ', Info: ' +
-          result.stats.infos
-        "
+        class="max-w-[1400px] mx-auto px-6 h-full flex items-center justify-between"
       >
-        <div
-          class="h-full bg-red-400/70 transition-all duration-500"
-          [style.width.%]="(result.stats.errors / result.stats.total) * 100"
-        ></div>
-        <div
-          class="h-full bg-amber-400/70 transition-all duration-500"
-          [style.width.%]="(result.stats.warns / result.stats.total) * 100"
-        ></div>
-        <div
-          class="h-full bg-sky-400/70 transition-all duration-500"
-          [style.width.%]="(result.stats.infos / result.stats.total) * 100"
-        ></div>
-      </div>
-      <div class="flex items-center gap-5 shrink-0">
-        <span class="flex items-center gap-1.5 text-[10px] font-mono">
-          <span class="w-2 h-2 bg-red-400 inline-block"></span>
-          <span class="text-red-400">ERROR</span>
-          <span class="text-[#6b7280]"
-            >{{ result.stats.errors }} ({{
-              (result.stats.errors / result.stats.total) * 100
-                | number: "1.0-0"
-            }}%)</span
+        <div class="flex items-center gap-5 text-[9px] font-mono">
+          <span class="flex items-center gap-1.5">
+            <span
+              class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"
+            ></span>
+            <span class="text-emerald-400">REST API — LIVE</span>
+          </span>
+          <span
+            class="text-[#6b7280] hidden sm:block"
+            *ngIf="result$ | async as result"
           >
-        </span>
-        <span class="flex items-center gap-1.5 text-[10px] font-mono">
-          <span class="w-2 h-2 bg-amber-400 inline-block"></span>
-          <span class="text-amber-400">WARN</span>
-          <span class="text-[#6b7280]"
-            >{{ result.stats.warns }} ({{
-              (result.stats.warns / result.stats.total) * 100 | number: "1.0-0"
-            }}%)</span
-          >
-        </span>
-        <span class="flex items-center gap-1.5 text-[10px] font-mono">
-          <span class="w-2 h-2 bg-sky-400 inline-block"></span>
-          <span class="text-sky-400">INFO</span>
-          <span class="text-[#6b7280]"
-            >{{ result.stats.infos }} ({{
-              (result.stats.infos / result.stats.total) * 100 | number: "1.0-0"
-            }}%)</span
-          >
+            {{ result.stats.total }} ENTRIES ·
+            {{ result.stats.vehicles }} VEHICLES
+          </span>
+        </div>
+        <span class="text-[9px] font-mono text-[#6b7280]/40 hidden md:block">
+          CONNECTED VEHICLES DIAGNOSTICS PLATFORM v2.4
         </span>
       </div>
     </div>
 
-    <!-- ── SECTION 4 — RESULTS TABLE ── -->
-    <app-search-results></app-search-results>
-  </main>
-
-  <!-- ── Footer ── -->
-  <footer
-    class="border-t border-white/[0.07] mt-6 py-4 px-6 bg-[#111318]/30"
-    role="contentinfo"
-  >
-    <div
-      class="max-w-[1400px] mx-auto flex items-center justify-between gap-4 flex-wrap"
+    <!-- ── Header ── -->
+    <header
+      class="sticky top-0 z-30 border-b border-white/[0.07] bg-[#0c0d10]/90 backdrop-blur-xl"
     >
-      <span class="text-[9px] font-mono text-[#6b7280]/40 tracking-wider">
-        VEHICLE DIAGNOSTICS DASHBOARD — Angular 16 + TailwindCSS + NgRx +
-        Express.js + Node.js
-      </span>
-    </div>
-  </footer>
+      <div
+        class="max-w-[1400px] mx-auto px-6 h-14 flex items-center justify-between gap-4"
+      >
+        <div class="flex items-center gap-3">
+          <img
+            src="assets/logo.svg"
+            alt="Vehicle Diagnostics Dashboard logo"
+            class="w-8 h-8"
+          />
+          <span
+            class="text-base font-bold tracking-[0.2em] uppercase"
+            style="font-family: &quot;Rajdhani&quot;, sans-serif"
+            >Vehicle Diagnostics Dashboard</span
+          >
+        </div>
+      </div>
+    </header>
+
+    <!-- ── Page body ── -->
+    <main
+      class="max-w-[1400px] mx-auto px-4 sm:px-6"
+      id="main-content"
+      role="main"
+    >
+      <!-- ── SECTION 1 — KPI CARDS ── -->
+      <div
+        class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 my-6 mb-4"
+        role="region"
+        aria-label="Diagnostic statistics"
+      >
+        <ng-container *ngIf="result$ | async as result">
+          <div
+            *ngFor="let item of statItems(result.stats)"
+            class="bg-[#111318] border border-white/[0.07] p-4 hover:border-white/15 transition-colors group"
+          >
+            <span
+              class="text-[9px] tracking-[0.18em] uppercase text-[#6b7280] font-mono block mb-3"
+            >
+              {{ item.label }}
+            </span>
+            <div
+              class="text-3xl font-bold leading-none mb-1 {{ item.color }}"
+              style="font-family: &quot;Rajdhani&quot;, sans-serif"
+              [ngClass]="item.color"
+            >
+              {{ item.value }}
+            </div>
+            <div class="text-[9px] text-[#6b7280] font-mono">
+              {{ item.sub }}
+            </div>
+          </div>
+        </ng-container>
+      </div>
+
+      <!-- ── SECTION 2 — SEARCH FORM ── -->
+      <app-search-panel></app-search-panel>
+
+      <!-- ── SECTION 3 — SEVERITY MIX ── -->
+      <div
+        class="bg-[#111318] border border-white/[0.07] px-4 py-3 flex flex-col sm:flex-row sm:items-center gap-3"
+        *ngIf="result$ | async as result"
+        role="region"
+        aria-label="Severity distribution"
+      >
+        <span
+          class="text-[9px] tracking-[0.18em] uppercase text-[#6b7280] font-mono shrink-0"
+        >
+          SEVERITY MIX
+        </span>
+        <div
+          class="flex-1 h-2 bg-[#0c0d10]/60 border border-white/[0.05] flex overflow-hidden"
+          role="img"
+          [attr.aria-label]="
+            'Errors: ' +
+            result.stats.errors +
+            ', Warnings: ' +
+            result.stats.warns +
+            ', Info: ' +
+            result.stats.infos
+          "
+        >
+          <div
+            class="h-full bg-red-400/70 transition-all duration-500"
+            [style.width.%]="(result.stats.errors / result.stats.total) * 100"
+          ></div>
+          <div
+            class="h-full bg-amber-400/70 transition-all duration-500"
+            [style.width.%]="(result.stats.warns / result.stats.total) * 100"
+          ></div>
+          <div
+            class="h-full bg-sky-400/70 transition-all duration-500"
+            [style.width.%]="(result.stats.infos / result.stats.total) * 100"
+          ></div>
+        </div>
+        <div class="flex items-center gap-5 shrink-0">
+          <span class="flex items-center gap-1.5 text-[10px] font-mono">
+            <span class="w-2 h-2 bg-red-400 inline-block"></span>
+            <span class="text-red-400">ERROR</span>
+            <span class="text-[#6b7280]"
+              >{{ result.stats.errors }} ({{
+                (result.stats.errors / result.stats.total) * 100
+                  | number: "1.0-0"
+              }}%)</span
+            >
+          </span>
+          <span class="flex items-center gap-1.5 text-[10px] font-mono">
+            <span class="w-2 h-2 bg-amber-400 inline-block"></span>
+            <span class="text-amber-400">WARN</span>
+            <span class="text-[#6b7280]"
+              >{{ result.stats.warns }} ({{
+                (result.stats.warns / result.stats.total) * 100
+                  | number: "1.0-0"
+              }}%)</span
+            >
+          </span>
+          <span class="flex items-center gap-1.5 text-[10px] font-mono">
+            <span class="w-2 h-2 bg-sky-400 inline-block"></span>
+            <span class="text-sky-400">INFO</span>
+            <span class="text-[#6b7280]"
+              >{{ result.stats.infos }} ({{
+                (result.stats.infos / result.stats.total) * 100
+                  | number: "1.0-0"
+              }}%)</span
+            >
+          </span>
+        </div>
+      </div>
+
+      <!-- ── SECTION 4 — RESULTS TABLE ── -->
+      <app-search-results></app-search-results>
+    </main>
+
+    <!-- ── Footer ── -->
+    <footer
+      class="border-t border-white/[0.07] mt-6 py-4 px-6 bg-[#111318]/30"
+      role="contentinfo"
+    >
+      <div
+        class="max-w-[1400px] mx-auto flex items-center justify-between gap-4 flex-wrap"
+      >
+        <span class="text-[9px] font-mono text-[#6b7280]/40 tracking-wider">
+          VEHICLE DIAGNOSTICS DASHBOARD — Angular 16 + TailwindCSS + NgRx +
+          Express.js + Node.js
+        </span>
+      </div>
+    </footer>
+  </div>
 </div>

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { pairwise } from 'rxjs/operators';
 import { LogsStats } from './models/log-entry.model';
 import { LogsSandbox } from './logs.sandbox';
 
@@ -7,10 +8,24 @@ import { LogsSandbox } from './logs.sandbox';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   result$ = this.logsSandbox.result$;
+  loading$ = this.logsSandbox.loading$;
+
+  showRefreshSpinner = true;
+  private sawInitialLoading = false;
 
   constructor(private logsSandbox: LogsSandbox) {}
+
+  ngOnInit(): void {
+    this.loading$
+      .pipe(pairwise())
+      .subscribe(([previousState, currentState]) => {
+        if (previousState && !currentState) {
+          this.showRefreshSpinner = false;
+        }
+      });
+  }
 
   statItems(s: LogsStats) {
     const t = s.total || 1;
