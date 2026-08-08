@@ -1,3 +1,7 @@
+input[type="date"] {
+  height: 34px;
+}
+
 input[type="date"]::-webkit-calendar-picker-indicator {
   cursor: pointer;
   opacity: 1;

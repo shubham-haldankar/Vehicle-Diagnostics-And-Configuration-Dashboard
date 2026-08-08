@@ -78,40 +78,51 @@
         </p>
       </div>
 
-      <!-- From date -->
-      <div class="flex flex-col gap-1.5">
-        <label
-          for="fromDate"
-          class="text-[9px] tracking-[0.15em] uppercase text-[#6b7280] font-mono"
-          >FROM</label
-        >
-        <input
-          id="fromDate"
-          formControlName="fromDate"
-          type="date"
-          [class.date-empty]="!searchForm.get('fromDate')?.value"
-          class="w-full px-3 py-2 bg-[#0c0d10] border border-white/[0.07] text-[#e8eaf0] focus:outline-none focus:border-amber-500/60 transition-colors text-[11px] font-mono"
-          aria-label="From date"
-        />
-        <p class="text-[9px] font-mono min-h-[14px] text-transparent">&nbsp;</p>
-      </div>
+      <!-- Date range -->
+      <div class="sm:col-span-2 lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-1.5 items-start">
+        <div class="flex flex-col gap-1.5">
+          <label
+            for="fromDate"
+            class="text-[9px] tracking-[0.15em] uppercase text-[#6b7280] font-mono"
+            >FROM</label
+          >
+          <input
+            id="fromDate"
+            formControlName="fromDate"
+            type="date"
+            [class.date-empty]="!searchForm.get('fromDate')?.value"
+            class="w-full px-3 py-2 bg-[#0c0d10] border border-white/[0.07] text-[#e8eaf0] focus:outline-none focus:border-amber-500/60 transition-colors text-[11px] font-mono"
+            aria-label="From date"
+          />
+        </div>
 
-      <!-- To date -->
-      <div class="flex flex-col gap-1.5">
-        <label
-          for="toDate"
-          class="text-[9px] tracking-[0.15em] uppercase text-[#6b7280] font-mono"
-          >TO</label
+        <div class="flex flex-col gap-1.5">
+          <label
+            for="toDate"
+            class="text-[9px] tracking-[0.15em] uppercase text-[#6b7280] font-mono"
+            >TO</label
+          >
+          <input
+            id="toDate"
+            formControlName="toDate"
+            type="date"
+            [class.date-empty]="!searchForm.get('toDate')?.value"
+            class="w-full px-3 py-2 bg-[#0c0d10] border border-white/[0.07] text-[#e8eaf0] focus:outline-none focus:border-amber-500/60 transition-colors text-[11px] font-mono"
+            aria-label="To date"
+          />
+        </div>
+
+        <p
+          class="text-[9px] font-mono min-h-[14px] sm:col-span-2"
+          [ngClass]="showDateRangeError ? 'text-red-400' : 'text-transparent'"
+          role="alert"
         >
-        <input
-          id="toDate"
-          formControlName="toDate"
-          type="date"
-          [class.date-empty]="!searchForm.get('toDate')?.value"
-          class="w-full px-3 py-2 bg-[#0c0d10] border border-white/[0.07] text-[#e8eaf0] focus:outline-none focus:border-amber-500/60 transition-colors text-[11px] font-mono"
-          aria-label="To date"
-        />
-        <p class="text-[9px] font-mono min-h-[14px] text-transparent">&nbsp;</p>
+          {{
+            showDateRangeError
+              ? 'FROM DATE MUST BE BEFORE OR EQUAL TO TO DATE.'
+              : '\u00A0'
+          }}
+        </p>
       </div>
 
       <!-- Severity -->

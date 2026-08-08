@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { SearchDto } from '../../models/search-dto';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LogsSandbox } from 'src/app/logs.sandbox';
+import { CustomValidators } from 'src/app/shared/utils/custom-validators';
+import { RegexPatterns } from 'src/app/shared/utils/regex-patterns';
 
 @Component({
   selector: 'app-search-panel',
@@ -19,16 +21,30 @@ export class SearchPanelComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.searchForm = this.fb.group({
-      vehicleId: ['', [Validators.pattern(/^\d{4}$/)]],
-      errorCode: [
-        '',
-        [Validators.pattern(/^[BCPU][0-9A-F]{4}(\s*,\s*[BCPU][0-9A-F]{4})*$/i)],
-      ],
-      severity: [''],
-      fromDate: [''],
-      toDate: [''],
-    });
+    this.searchForm = this.fb.group(
+      {
+        vehicleId: [
+          '',
+          [
+            Validators.pattern(RegexPatterns.VEHICLE_ID_PATTERN),
+          ],
+        ],
+        errorCode: [
+          '',
+          [
+            Validators.pattern(RegexPatterns.ERROR_CODE_LIST_PATTERN),
+          ],
+        ],
+        severity: [''],
+        fromDate: [''],
+        toDate: [''],
+      },
+      {
+        validators: [
+          CustomValidators.fromDateBeforeOrEqualToToDate('fromDate', 'toDate'),
+        ],
+      },
+    );
   }
 
   onSearch(): void {
@@ -103,5 +119,11 @@ export class SearchPanelComponent implements OnInit {
 
   get showErrorCodeError(): boolean {
     return !!(this.hasSearchAttempted && this.errorCode?.errors?.['pattern']);
+  }
+
+  get showDateRangeError(): boolean {
+    return !!(this.hasSearchAttempted && 
+      this.searchForm.errors?.['invalidDateRange']
+    );
   }
 }
