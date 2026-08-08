@@ -1,9 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { SearchDto } from '../models/search-dto';
+import { SearchDto } from '../models/search-dto.model';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
-import { SearchResultDto } from '../models/search-result-dto';
+import { SearchResultDto } from '../models/search-result-dto.model';
 
 @Injectable({
   providedIn: 'root',

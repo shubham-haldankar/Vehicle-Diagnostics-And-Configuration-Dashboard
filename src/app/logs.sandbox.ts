@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as LogsActions from './store/logs.actions';
 import * as LogsSelectors from './store/logs.selectors';
-import { SearchDto } from './models/search-dto';
+import { SearchDto } from './models/search-dto.model';
 
 @Injectable({
   providedIn: 'root',

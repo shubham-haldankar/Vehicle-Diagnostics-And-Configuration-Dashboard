@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { LogsSandbox } from 'src/app/logs.sandbox';
 import { LogEntry, SortField } from 'src/app/models/log-entry.model';
-import { SearchDto } from 'src/app/models/search-dto';
+import { SearchDto } from 'src/app/models/search-dto.model';
 import { take } from 'rxjs/operators';
 import { LogsApiService } from 'src/app/services/logs-api.service';
 
@@ -62,9 +62,6 @@ export class SearchResultsComponent {
   }
 
   ngOnInit(): void {
-    this.logsSandbox.loadLogs(this.defaultDto());
-    this.logsSandbox.setSearchDto(this.defaultDto());
-
     this.result$.subscribe({
       next: ({ sortedBy, sortedOrder, logs, stats, offset }) => {
         this.sortField = sortedBy ?? 'dateTimeCreated';

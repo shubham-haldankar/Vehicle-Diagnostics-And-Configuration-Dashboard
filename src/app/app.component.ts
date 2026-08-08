@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { pairwise } from 'rxjs/operators';
 import { LogsStats } from './models/log-entry.model';
 import { LogsSandbox } from './logs.sandbox';
+import { SearchDto } from './models/search-dto.model';
 
 @Component({
   selector: 'app-root',
@@ -13,11 +14,13 @@ export class AppComponent implements OnInit {
   loading$ = this.logsSandbox.loading$;
 
   showRefreshSpinner = true;
-  private sawInitialLoading = false;
 
   constructor(private logsSandbox: LogsSandbox) {}
 
   ngOnInit(): void {
+    this.logsSandbox.loadLogs(this.defaultDto());
+    this.logsSandbox.setSearchDto(this.defaultDto());
+
     this.loading$
       .pipe(pairwise())
       .subscribe(([previousState, currentState]) => {
@@ -61,5 +64,16 @@ export class AppComponent implements OnInit {
         color: 'text-violet-400',
       },
     ];
+  }
+  private defaultDto(): SearchDto {
+    return {
+      vehicleId: '',
+      errorCode: '',
+      severity: '',
+      fromDate: '',
+      toDate: '',
+      limit: 10,
+      offset: 0,
+    };
   }
 }

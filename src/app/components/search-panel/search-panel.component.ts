@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SearchDto } from '../../models/search-dto';
+import { SearchDto } from '../../models/search-dto.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LogsSandbox } from 'src/app/logs.sandbox';
 import { CustomValidators } from 'src/app/shared/utils/custom-validators';
@@ -23,17 +23,10 @@ export class SearchPanelComponent implements OnInit {
   ngOnInit(): void {
     this.searchForm = this.fb.group(
       {
-        vehicleId: [
-          '',
-          [
-            Validators.pattern(RegexPatterns.VEHICLE_ID_PATTERN),
-          ],
-        ],
+        vehicleId: ['', [Validators.pattern(RegexPatterns.VEHICLE_ID_PATTERN)]],
         errorCode: [
           '',
-          [
-            Validators.pattern(RegexPatterns.ERROR_CODE_LIST_PATTERN),
-          ],
+          [Validators.pattern(RegexPatterns.ERROR_CODE_LIST_PATTERN)],
         ],
         severity: [''],
         fromDate: [''],
@@ -122,8 +115,8 @@ export class SearchPanelComponent implements OnInit {
   }
 
   get showDateRangeError(): boolean {
-    return !!(this.hasSearchAttempted && 
-      this.searchForm.errors?.['invalidDateRange']
+    return !!(
+      this.hasSearchAttempted && this.searchForm.errors?.['invalidDateRange']
     );
   }
 }

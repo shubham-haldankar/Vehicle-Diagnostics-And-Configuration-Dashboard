@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
-import { SearchDto } from '../models/search-dto';
-import { SearchResultDto } from '../models/search-result-dto';
+import { SearchDto } from '../models/search-dto.model';
+import { SearchResultDto } from '../models/search-result-dto.model';
 
 export const loadLogs = createAction(
   '[Logs] Load Logs',

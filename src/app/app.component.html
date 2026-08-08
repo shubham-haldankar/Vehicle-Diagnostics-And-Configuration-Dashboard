@@ -1,10 +1,7 @@
-<div
-  class="min-h-screen bg-[#0c0d10] text-[#e8eaf0] relative"
-  style="font-family: &quot;Inter&quot;, sans-serif"
->
+<ng-container *ngIf="showRefreshSpinner; else appContent">
   <div
-    *ngIf="showRefreshSpinner"
-    class="fixed inset-0 z-50 flex items-center justify-center bg-[#0c0d10]"
+    class="min-h-screen bg-[#0c0d10] text-[#e8eaf0] flex items-center justify-center"
+    style="font-family: &quot;Inter&quot;, sans-serif"
   >
     <div
       class="flex flex-col items-center gap-3"
@@ -19,8 +16,13 @@
       </span>
     </div>
   </div>
+</ng-container>
 
-  <div>
+<ng-template #appContent>
+  <div
+    class="min-h-screen bg-[#0c0d10] text-[#e8eaf0]"
+    style="font-family: &quot;Inter&quot;, sans-serif"
+  >
     <!-- ── Status strip ── -->
     <div class="border-b border-white/[0.07] bg-[#111318]/50 h-7">
       <div
@@ -198,4 +200,4 @@
       </div>
     </footer>
   </div>
-</div>
+</ng-template>

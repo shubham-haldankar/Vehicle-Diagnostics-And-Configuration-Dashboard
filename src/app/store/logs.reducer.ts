@@ -6,7 +6,7 @@ import {
   setSearchDto,
 } from './logs.actions';
 import { LogEntry, LogsStats, SortField } from '../models/log-entry.model';
-import { SearchDto } from '../models/search-dto';
+import { SearchDto } from '../models/search-dto.model';
 
 export interface LogsState {
   sortedBy: SortField;
